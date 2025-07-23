@@ -49,5 +49,12 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSPhotoLibraryUsageDescription</key>
+    <string>We don't have the permission for your gallery</string>
+  	<key>NSCameraUsageDescription</key>
+  	<string>We don't have the permission for your camera</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+  	<string>We don't have the permission to add your photos</string>
+
 </dict>
 </plist>
