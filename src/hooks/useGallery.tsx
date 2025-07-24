@@ -12,9 +12,10 @@ const useGallery = () => {
 
   const { allowed, checkPermission } = usePermission(
     Platform.OS === 'android'
-      ? PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE
+      ? PERMISSIONS.ANDROID.READ_MEDIA_IMAGES
       : PERMISSIONS.IOS.PHOTO_LIBRARY,
   );
+
   const fetchGallery = async (): Promise<string | undefined> => {
     const options: ImageLibraryOptions = {
       mediaType: 'photo',
@@ -29,12 +30,16 @@ const useGallery = () => {
   };
   const pickPhoto = async (): Promise<string | undefined> => {
     let photoUri: string | undefined;
+    console.log(1);
     if (allowed) {
       photoUri = await fetchGallery();
+      console.log(2);
     } else {
       const permissionStatus = await checkPermission();
+      console.log(3);
       if (permissionStatus) {
         photoUri = await fetchGallery();
+        console.log(4);
       }
     }
     if (photoUri) {
