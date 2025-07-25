@@ -14,7 +14,7 @@ const AuthStack = createNativeStackNavigator<AuthStackParamList>();
 const AppStack = createNativeStackNavigator<AppStackParamList>();
 
 const AppNavigation = () => {
-  const accessToken = true;
+  const accessToken = false;
 
   return (
     <NavigationContainer>

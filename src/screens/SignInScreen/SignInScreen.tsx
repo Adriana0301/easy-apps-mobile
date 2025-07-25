@@ -1,10 +1,6 @@
-import { Text, View } from 'react-native';
+import SignIn from '../../components/SignIn/SignIn';
 
 const SignInScreen = () => {
-  return (
-    <View>
-      <Text>SignInScreen</Text>
-    </View>
-  );
+  return <SignIn />;
 };
 export default SignInScreen;

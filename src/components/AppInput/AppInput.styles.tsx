@@ -3,7 +3,7 @@ import Colors from '../../theme/colors';
 
 const styles = StyleSheet.create({
   input: {
-    color: Colors.white,
+    color: Colors.lightViolet,
     borderWidth: 1,
     borderColor: Colors.white,
     borderRadius: 12,
@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   text: {
-    color: Colors.lightGray,
+    color: Colors.lightViolet,
   },
   isVisiblePassword: {
     position: 'absolute',
