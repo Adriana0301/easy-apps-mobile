@@ -30,16 +30,12 @@ const useGallery = () => {
   };
   const pickPhoto = async (): Promise<string | undefined> => {
     let photoUri: string | undefined;
-    console.log(1);
     if (allowed) {
       photoUri = await fetchGallery();
-      console.log(2);
     } else {
       const permissionStatus = await checkPermission();
-      console.log(3);
       if (permissionStatus) {
         photoUri = await fetchGallery();
-        console.log(4);
       }
     }
     if (photoUri) {

@@ -1,11 +1,12 @@
-import { Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import SignUpForm from '../../components/SignUpForm/SignUpForm';
+import styles from './SignUpScreen.styles';
 
 const SignUpScreen = () => {
-  console.log(process.env.TEST);
   return (
-    <View>
-      <Text>SignUpScreen</Text>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <SignUpForm />
+    </SafeAreaView>
   );
 };
 export default SignUpScreen;
