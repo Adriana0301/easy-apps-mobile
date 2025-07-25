@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import Colors from '../../theme/colors';
 
 const styles = StyleSheet.create({
   container: {
@@ -14,6 +15,9 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     gap: 11,
+  },
+  error: {
+    color: Colors.yellow,
   },
 });
 export default styles;
