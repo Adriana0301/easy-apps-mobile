@@ -16,7 +16,7 @@ const validationSchemaSignUp = Yup.object().shape({
     .oneOf([Yup.ref('password')], 'Passwords must match')
     .required('Repeat Password is required')
     .label('Repeat Password'),
-  photo: Yup.string().url('Photo must be a valid URL'),
+  avatar: Yup.string().url('Photo must be a valid URL'),
 });
 
 export default validationSchemaSignUp;
