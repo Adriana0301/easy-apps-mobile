@@ -7,7 +7,7 @@ import { AuthNavigationProps } from '../../interfaces/navigation/routeParams';
 import validationSchemaSignUp from '../../validation/validationSchemaSignUp';
 import AppButton from '../AppButton/AppButton';
 import AppInput from '../AppInput/AppInput';
-import ImageContainer from '../ImageContainer/ImageContainer';
+import AvatarPicker from '../AvatarPicker/AvatarPicker';
 import styles from './SignUpForm.styles';
 
 const SignUpForm = () => {
@@ -29,7 +29,7 @@ const SignUpForm = () => {
       {({ values, setFieldValue, errors }) => (
         <View style={styles.container}>
           <View>
-            <ImageContainer
+            <AvatarPicker
               values={values}
               pickPhoto={pickPhoto}
               setFieldValue={setFieldValue}
