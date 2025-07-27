@@ -27,7 +27,7 @@ const AppInput: React.FC<AppInputProps> = ({ typeOfInput, label, ...rest }) => {
         autoCapitalize="none"
         style={styles.input}
         secureTextEntry={typeOfInput === 'password' && isHidden ? true : false}
-        placeholderTextColor={Colors.white}
+        placeholderTextColor={Colors.lightViolet}
       />
       {typeOfInput === 'password' && (
         <TouchableOpacity
