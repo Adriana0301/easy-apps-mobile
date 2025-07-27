@@ -3,6 +3,12 @@ import IconContainer from '../IconContainer/IconContainer';
 import styles from './AvatarPicker.styles';
 
 const AvatarPicker = ({ values, pickPhoto, setFieldValue }) => {
+  const onPickPhoto = async () => {
+    const result = await pickPhoto();
+    if (result) {
+      setFieldValue('avatar', result);
+    }
+  };
   return (
     <View style={styles.imageContainer}>
       {!values.avatar ? (
@@ -14,12 +20,7 @@ const AvatarPicker = ({ values, pickPhoto, setFieldValue }) => {
         <Image style={styles.image} src={values.avatar} />
       )}
       <IconContainer
-        onPickPhoto={async () => {
-          const result = await pickPhoto();
-          if (result) {
-            setFieldValue('avatar', result);
-          }
-        }}
+        onPickPhoto={onPickPhoto}
         onDeletePhoto={() => setFieldValue('avatar', '')}
       />
     </View>
