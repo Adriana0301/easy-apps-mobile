@@ -1,11 +1,20 @@
 import * as Yup from 'yup';
 
-const validationSchema = Yup.object().shape({
-  email: Yup.string().required().email().label('Email'),
+
+const validationSchemaSignUp = Yup.object().shape({
+  email: Yup.string().email().required('Email is required').label('Email'),
+  name: Yup.string().min(2).required('Name is required').label('Name'),
   password: Yup.string()
-    .required()
-    .min(8)
-    .matches(/[A-Za-z]/, 'Password must include at least one letter'),
+    .min(8, 'Minimum 8 characters')
+    .matches(/[a-zA-Z]/, 'Password must contain at least one letter')
+    .required('Password is required')
+    .label('Password'),
+  repeatPassword: Yup.string()
+    .oneOf([Yup.ref('password')], 'Passwords must match')
+    .required('Repeat password is required')
+    .label('Repeat password'),
+  avatar: Yup.string().url('Photo must be a valid URL'),
 });
 
-export default validationSchema;
+export default validationSchemaSignUp;
+
