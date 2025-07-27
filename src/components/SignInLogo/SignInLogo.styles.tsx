@@ -2,14 +2,6 @@ import { StyleSheet } from 'react-native';
 import Colors from '../../theme/colors';
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: Colors.violet,
-    flex: 1,
-    paddingHorizontal: 20,
-    paddingVertical: 55,
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
   topContainer: {
     alignItems: 'center',
     justifyContent: 'center',

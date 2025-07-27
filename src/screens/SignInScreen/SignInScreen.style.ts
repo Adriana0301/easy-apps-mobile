@@ -1,9 +1,14 @@
 import { StyleSheet } from 'react-native';
+import Colors from '../../theme/colors';
 
 const styles = StyleSheet.create({
-  errorText: {
-    color: 'red',
-  },
+    container:{
+    backgroundColor: Colors.violet,
+    flex: 1,
+    paddingHorizontal: 20,
+    justifyContent: 'space-between',
+    paddingVertical: 55,  
+    },
   bottomContainer: {
     width: '100%',
     gap: 49,

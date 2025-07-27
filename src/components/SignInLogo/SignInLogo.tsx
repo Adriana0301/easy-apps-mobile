@@ -1,10 +1,8 @@
 import { Image, Text, View } from 'react-native';
-import SginInForm from '../SginInForm/SignInForm';
-import styles from '../SignIn/SignIn.styles';
+import styles from '../SignInLogo/SignInLogo.styles';
 
-const SignIn = () => {
+const SignInLogo = () => {
   return (
-    <View style={styles.container}>
       <View style={styles.topContainer}>
         <Image
           source={require('../../assets/images/Logo.png')}
@@ -12,9 +10,7 @@ const SignIn = () => {
         />
         <Text style={styles.text}>Welcome!</Text>
       </View>
-      <SginInForm />
-    </View>
   );
 };
 
-export default SignIn;
+export default SignInLogo;
