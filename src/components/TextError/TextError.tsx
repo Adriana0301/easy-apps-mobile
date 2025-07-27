@@ -1,14 +1,12 @@
-import { Text } from "react-native-svg";
-import Colors from "../../theme/colors";
+import { Text } from 'react-native';
+import styles from './TextError.styles';
 
 type ITextError = {
-    error: string;
-}
+  error: string;
+};
 
-const TextError: React.FC<ITextError> = ({error}) => {
-    return(
-        <Text color={Colors.red}>{error}</Text>
-    )
-}
+const TextError: React.FC<ITextError> = ({ error }) => {
+  return <Text style={styles.textError}>{error}</Text>;
+};
 
 export default TextError;

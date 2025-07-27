@@ -1,19 +1,20 @@
 import { useNavigation } from '@react-navigation/native';
 import { Formik } from 'formik';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AppButton from '../../components/AppButton/AppButton';
 import AppInput from '../../components/AppInput/AppInput';
 import AvatarPicker from '../../components/AvatarPicker/AvatarPicker';
+import TextError from '../../components/TextError/TextError';
 import useGallery from '../../hooks/useGallery';
 import { ERouteNames } from '../../interfaces/navigation/routeNames';
-import { AuthNavigationProps } from '../../interfaces/navigation/routeParams';
+import { AuthNavigationParams } from '../../interfaces/navigation/routeParams';
 import validationSchemaSignUp from '../../validation/validationSchemaSignUp';
 import styles from './SignUpScreen.styles';
 
 const SignUpScreen = () => {
   const { pickPhoto } = useGallery();
-  const navigation = useNavigation<AuthNavigationProps>();
+  const navigation = useNavigation<AuthNavigationParams>();
   return (
     <SafeAreaView style={styles.container}>
       <Formik
@@ -40,23 +41,19 @@ const SignUpScreen = () => {
                   label="Email"
                   onChangeText={text => setFieldValue('email', text)}
                 />
-                {errors.email && (
-                  <Text style={styles.error}>{errors.email}</Text>
-                )}
+                {errors.email && <TextError error={errors.email} />}
                 <AppInput
                   label="Name"
                   onChangeText={text => setFieldValue('name', text)}
                 />
-                {errors.name && <Text style={styles.error}>{errors.name}</Text>}
+                {errors.name && <TextError error={errors.name} />}
                 <AppInput
                   label="Password "
                   placeholder="password123"
                   typeOfInput="password"
                   onChangeText={text => setFieldValue('password', text)}
                 />
-                {errors.password && (
-                  <Text style={styles.error}>{errors.password}</Text>
-                )}
+                {errors.password && <TextError error={errors.password} />}
                 <AppInput
                   label="Repeat password "
                   placeholder="password123"
@@ -64,7 +61,7 @@ const SignUpScreen = () => {
                   onChangeText={text => setFieldValue('repeatPassword', text)}
                 />
                 {errors.repeatPassword && (
-                  <Text style={styles.error}>{errors.repeatPassword}</Text>
+                  <TextError error={errors.repeatPassword} />
                 )}
               </View>
             </View>
