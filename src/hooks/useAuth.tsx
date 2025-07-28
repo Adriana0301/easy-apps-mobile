@@ -1,11 +1,11 @@
 import { useDispatch } from "react-redux";
-import { TAppDispatch } from "../redux/store";
+import { TAppDispatch, TRootState } from "../redux/store";
 
 const useAuth = () => {
   const dispatch = useDispatch<TAppDispatch>();
 
-//   const accessToken = useSelector((state: TRootState) => state.auth.accessToken);
-//   const loading = useSelector((state: TRootState) => state.auth.loading);
+  const accessToken = useSelector((state: TRootState) => state.auth.accessToken);
+  const loading = useSelector((state: TRootState) => state.auth.loading);
 
   const signInUser = (params: { email: string; password: string }) => {
     // dispatch(signInAsyncAction(params));
