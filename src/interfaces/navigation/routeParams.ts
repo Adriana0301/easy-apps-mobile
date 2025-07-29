@@ -1,3 +1,4 @@
+import { NavigationProp } from '@react-navigation/native';
 import { ERouteNames } from './routeNames';
 
 export type AuthStackParamList = {
@@ -17,3 +18,6 @@ export type TabsStackParamList = {
   [ERouteNames.CURRENT_USER]: undefined;
   [ERouteNames.COMMON_TASKS_SCREEN]: undefined;
 };
+
+
+export type AuthNavigationParams = NavigationProp<AuthStackParamList>;
