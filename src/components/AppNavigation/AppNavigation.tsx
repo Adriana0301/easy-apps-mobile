@@ -1,6 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
+import useAuth from '../../hooks/useAuth';
 import { ERouteNames } from '../../interfaces/navigation/routeNames';
 import {
   AppStackParamList,
@@ -14,7 +15,8 @@ const AuthStack = createNativeStackNavigator<AuthStackParamList>();
 const AppStack = createNativeStackNavigator<AppStackParamList>();
 
 const AppNavigation = () => {
-  const accessToken = false;
+
+  const {accessToken} = useAuth();
 
   return (
     <NavigationContainer>
