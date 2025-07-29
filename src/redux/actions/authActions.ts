@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { isAxiosError } from 'axios';
+import { Alert } from 'react-native';
 import { loginRequest } from '../../axios/authApi';
 import { LoginPayload } from '../../interfaces/auth/auth';
 
@@ -13,12 +14,12 @@ export const signInAsyncAction = createAsyncThunk(
       console.log('Token received:', token);
       return token;
     } catch (error) {
+      let errorMessage = "An unexpected error occurred";
       if (isAxiosError(error)) {
-        const errorMessage = error.response?.data?.message || "Login failed";
-        return rejectWithValue(errorMessage);
-      } else {
-        return rejectWithValue("An unexpected error occurred");
+        errorMessage = error.response?.data?.error || "Login failed";
       }
+      Alert.alert("Error", errorMessage);
+      return rejectWithValue(errorMessage);
     }
   }
 );
