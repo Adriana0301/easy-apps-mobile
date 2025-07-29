@@ -16,7 +16,7 @@ import styles from './SignUpScreen.styles';
 const SignUpScreen = () => {
   const { pickPhoto } = useGallery();
   const navigation = useNavigation<AuthNavigationParams>();
-  const { signUp } = useAuth();
+  const { loading, signUp } = useAuth();
   return (
     <SafeAreaView style={styles.container}>
       <Formik
@@ -28,7 +28,9 @@ const SignUpScreen = () => {
           repeatPassword: '',
         }}
         validationSchema={validationSchemaSignUp}
-        onSubmit={(values) => signUp(values.email, values.name, values.password, values.avatar)}
+        onSubmit={values =>
+          signUp(values.email, values.name, values.password, values.avatar)
+        }
       >
         {({ handleSubmit, values, setFieldValue, errors }) => (
           <View style={styles.wrapper}>
@@ -68,7 +70,11 @@ const SignUpScreen = () => {
               </View>
             </View>
             <View style={styles.buttonContainer}>
-              <AppButton title="Sign up" onPress={() => handleSubmit()} />
+              <AppButton
+                title="Sign up"
+                isLoading={loading}
+                onPress={() => handleSubmit()}
+              />
               <AppButton
                 title="Go To Sign In"
                 onPress={() => navigation.navigate(ERouteNames.SIGN_IN_SCREEN)}

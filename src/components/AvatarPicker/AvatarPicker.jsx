@@ -9,6 +9,7 @@ const AvatarPicker = ({ values, pickPhoto, setFieldValue }) => {
       setFieldValue('avatar', result);
     }
   };
+
   return (
     <View style={styles.imageContainer}>
       {!values.avatar ? (
