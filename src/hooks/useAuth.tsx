@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { signInAsyncAction } from "../redux/actions/authActions";
+import { signInAsyncAction, signUpAsyncAction } from "../redux/actions/authActions";
 import { TAppDispatch, TRootState } from "../redux/store";
 
 const useAuth = () => {
@@ -12,10 +12,15 @@ const useAuth = () => {
     dispatch(signInAsyncAction({email, password}));
   };
 
+  const signUpUser = (email: string, name: string, password: string, avatar?: string) => {
+    dispatch(signUpAsyncAction({email, name, password, avatar}));
+  };
+
   return {
     accessToken,
     loading,
     signIn: signInUser,
+    signUp: signUpUser,
   };
 };
 

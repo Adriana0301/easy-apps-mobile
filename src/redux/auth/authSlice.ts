@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { AuthState } from "../../interfaces/auth/auth";
-import { signInAsyncAction } from "../actions/authActions";
+import { signInAsyncAction, signUpAsyncAction } from "../actions/authActions";
 
 const initialState: AuthState  ={
     isLoading: false,
@@ -25,6 +25,19 @@ const authSlice = createSlice({
                 state.isError = null;
             })
             .addCase(signInAsyncAction.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = action.payload as string;
+            })
+            .addCase(signUpAsyncAction.pending, (state)=>{
+                state.isLoading = true;
+                state.isError = null;
+            })
+            .addCase(signUpAsyncAction.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.accessToken = action.payload;
+                state.isError = null;
+            })
+            .addCase(signUpAsyncAction.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = action.payload as string;
             });

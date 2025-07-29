@@ -6,7 +6,6 @@ export const loginRequest = async(email: string, password: string) => {
 
 export const signupRequest = async(email: string, name: string, password: string, avatar?: string) => {
     const formData  = new FormData();
-    formData.append('avatar', avatar);
     formData.append('email', email);
     formData.append('name', name);
     formData.append('password', password);
