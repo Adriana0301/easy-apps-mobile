@@ -15,11 +15,14 @@ export const signupRequest = async (
   formData.append('username', name);
   formData.append('password', password);
 
-  formData.append('avatar', {
-    uri: avatar,
-    type: 'image/jpeg',
-    name: 'avatar.jpg',
-  });
+  if (avatar) {
+    const file = {
+      uri: avatar,
+      type: 'image/jpeg',
+      name: 'avatar.jpg',
+    };
+    formData.append('avatar', file);
+  }
 
   return axiosInstance.post('/auth/register', formData, {
     headers: {
