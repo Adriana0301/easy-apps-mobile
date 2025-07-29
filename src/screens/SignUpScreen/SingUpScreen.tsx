@@ -17,6 +17,7 @@ const SignUpScreen = () => {
   const { pickPhoto } = useGallery();
   const navigation = useNavigation<AuthNavigationParams>();
   const { loading, signUp } = useAuth();
+
   return (
     <SafeAreaView style={styles.container}>
       <Formik
