@@ -5,6 +5,7 @@ import AppButton from '../../components/AppButton/AppButton';
 import AppInput from '../../components/AppInput/AppInput';
 import SignInLogo from '../../components/SignInLogo/SignInLogo';
 import TextError from '../../components/TextError/TextError';
+import useAuth from '../../hooks/useAuth';
 import { ERouteNames } from '../../interfaces/navigation/routeNames';
 import { AuthNavigationParams } from '../../interfaces/navigation/routeParams';
 import validationSchemaSignIn from '../../validation/validationSchemaSignIn';
@@ -15,6 +16,7 @@ const SignInScreen = () => {
   const goToSignUp = () => {
     navigation.navigate(ERouteNames.SIGN_UP_SCREEN);
   };
+  const {loading, signIn} = useAuth();
 
   return (
     <View style={styles.container}>
@@ -22,7 +24,8 @@ const SignInScreen = () => {
       <Formik
         initialValues={{ email: '', password: '' }}
         onSubmit={values => {
-          console.log(values);
+          signIn(values.email, values.password);
+
         }}
         validationSchema={validationSchemaSignIn}
       >
@@ -45,7 +48,7 @@ const SignInScreen = () => {
               {errors.password && <TextError error={errors.password} />}
             </View>
             <View style={styles.inputButtonContainer}>
-              <AppButton onPress={() => handleSubmit()} title="Log in" />
+              <AppButton isLoading={loading} onPress={() => handleSubmit()} title="Log in" />
               <AppButton onPress={goToSignUp} title="Go To Sign Up" />
             </View>
           </View>

@@ -1,7 +1,7 @@
-import { View } from 'react-native';
+import { Text, View } from 'react-native';
 
 const TabsScreen = () => {
-  return <View></View>;
+  return <View><Text>Tabs Screen</Text></View>;
 };
 
 export default TabsScreen;
