@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { AuthState } from "../../interfaces/auth/auth";
+import { signInAsyncAction } from "../actions/authActions";
 
 const initialState: AuthState  ={
     isLoading: false,
@@ -11,21 +12,23 @@ const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers:{
-        setToken: (state, action) => {
-            state.accessToken = action.payload;
-            state.isLoading = false;
-            state.isError = null;
-        },
-        setLoading: (state, action) => {
-            state.isLoading = action.payload; 
-        },
-        setError: (state, action) => {
-            state.isError = action.payload;
-            state.isLoading = false;
-        },
-
-    }
-
+    },
+    extraReducers: (builder) => {
+            builder
+            .addCase(signInAsyncAction.pending, (state)=>{
+                state.isLoading = true;
+                state.isError = null;
+            })
+            .addCase(signInAsyncAction.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.accessToken = action.payload;
+                state.isError = null;
+            })
+            .addCase(signInAsyncAction.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = action.payload as string;
+            });
+        }
 });
 
 export default authSlice.reducer;
