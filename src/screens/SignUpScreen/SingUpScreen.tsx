@@ -6,6 +6,7 @@ import AppButton from '../../components/AppButton/AppButton';
 import AppInput from '../../components/AppInput/AppInput';
 import AvatarPicker from '../../components/AvatarPicker/AvatarPicker';
 import TextError from '../../components/TextError/TextError';
+import useAuth from '../../hooks/useAuth';
 import useGallery from '../../hooks/useGallery';
 import { ERouteNames } from '../../interfaces/navigation/routeNames';
 import { AuthNavigationParams } from '../../interfaces/navigation/routeParams';
@@ -15,6 +16,8 @@ import styles from './SignUpScreen.styles';
 const SignUpScreen = () => {
   const { pickPhoto } = useGallery();
   const navigation = useNavigation<AuthNavigationParams>();
+  const { loading, signUp } = useAuth();
+
   return (
     <SafeAreaView style={styles.container}>
       <Formik
@@ -26,9 +29,11 @@ const SignUpScreen = () => {
           repeatPassword: '',
         }}
         validationSchema={validationSchemaSignUp}
-        onSubmit={() => console.log('Form submitted')}
+        onSubmit={values =>
+          signUp(values.email, values.name, values.password, values.avatar)
+        }
       >
-        {({ values, setFieldValue, errors }) => (
+        {({ handleSubmit, values, setFieldValue, errors }) => (
           <View style={styles.wrapper}>
             <View>
               <AvatarPicker
@@ -66,7 +71,11 @@ const SignUpScreen = () => {
               </View>
             </View>
             <View style={styles.buttonContainer}>
-              <AppButton title="Sign up" onPress={() => console.log(values)} />
+              <AppButton
+                title="Sign up"
+                isLoading={loading}
+                onPress={() => handleSubmit()}
+              />
               <AppButton
                 title="Go To Sign In"
                 onPress={() => navigation.navigate(ERouteNames.SIGN_IN_SCREEN)}
