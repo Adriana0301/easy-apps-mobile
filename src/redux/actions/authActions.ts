@@ -40,14 +40,18 @@ export const signUpAsyncAction = createAsyncThunk(
       const token = response.data.accessToken;
       return token;
     } catch (error) {
-      console.log(error);
       let errorMessage = 'An unexpected error occurred';
       if (isAxiosError(error)) {
-        errorMessage =
-          error.response?.data?.errors?.join('\n') || 'Sign up failed';
-        console.log(error.response);
+        if (error.response?.data?.error) {
+          errorMessage = error.response?.data?.error || 'Sign up failed';
+          console.log(error.response);
+        } else if (error.response?.data?.errors) {
+          errorMessage =
+            error.response?.data?.errors.join('\n') || 'Sign up failed';
+          console.log(error.response);
+        }
       }
-      Alert.alert('Error', errorMessage);
+      Alert.alert(errorMessage);
       return rejectWithValue(errorMessage);
     }
   },
