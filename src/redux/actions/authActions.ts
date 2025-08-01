@@ -14,9 +14,16 @@ export const signInAsyncAction = createAsyncThunk(
     } catch (error) {
       let errorMessage = 'An unexpected error occurred';
       if (isAxiosError(error)) {
-        errorMessage = error.response?.data?.error || 'Login failed';
+        if (error.response?.data?.error) {
+          errorMessage = error.response?.data?.error || 'Sign in failed';
+          console.log(error.response);
+        } else if (error.response?.data?.errors) {
+          errorMessage =
+            error.response?.data?.errors.join('\n') || 'Sign in failed';
+          console.log(error.response);
+        }
       }
-      Alert.alert('Error', errorMessage);
+      Alert.alert(errorMessage);
       return rejectWithValue(errorMessage);
     }
   },
