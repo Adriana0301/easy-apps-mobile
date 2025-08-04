@@ -9,14 +9,13 @@ import {
 } from '../../interfaces/navigation/routeParams';
 import SignInScreen from '../../screens/SignInScreen/SignInScreen';
 import SignUpScreen from '../../screens/SignUpScreen/SingUpScreen';
-import TabsScreen from '../../screens/TabsScreen/TabsScreen';
+import Tabs from '../Tabs/Tabs';
 
 const AuthStack = createNativeStackNavigator<AuthStackParamList>();
 const AppStack = createNativeStackNavigator<AppStackParamList>();
 
 const AppNavigation = () => {
-
-  const {accessToken} = useAuth();
+  const { accessToken } = useAuth();
 
   return (
     <NavigationContainer>
@@ -33,10 +32,7 @@ const AppNavigation = () => {
         </AuthStack.Navigator>
       ) : (
         <AppStack.Navigator screenOptions={{ headerShown: false }}>
-          <AppStack.Screen
-            name={ERouteNames.TABS_SCREEN}
-            component={TabsScreen}
-          />
+          <AppStack.Screen name={ERouteNames.TABS_SCREEN} component={Tabs} />
         </AppStack.Navigator>
       )}
     </NavigationContainer>
