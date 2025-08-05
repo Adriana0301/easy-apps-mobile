@@ -1,11 +1,15 @@
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import TasksScreenHeader from '../../components/Header/TasksScreenHeader';
+import MyTasksList from '../../components/MyTasksList/MyTasksList';
+import styles from './TasksScreen.styles';
 
 const TasksScreen = () => {
   return (
     <View>
       <TasksScreenHeader />
-      <Text>TasksScreen</Text>
+      <View style={styles.tasksWrapper}>
+        <MyTasksList />
+      </View>
     </View>
   );
 };
