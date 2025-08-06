@@ -4,9 +4,9 @@ import ChangeIcon from '../../../assets/icons/ChangeIcon';
 import IconButton from '../../IconButton/IconButton';
 import styles from './MyTasksListItem.styles';
 
-type ItemProps = { title: string };
+type ItemProps = { title: string; done: boolean };
 
-const Item = ({ title }: ItemProps) => (
+const Item = ({ title, done }: ItemProps) => (
   <View style={styles.item}>
     <Text style={styles.title}>{title}</Text>
     <View style={styles.iconsWrapper}>
