@@ -1,10 +1,6 @@
-import { Text, View } from 'react-native';
+import { Text } from 'react-native';
 
-const TasksDetails = () => {
-  return (
-    <View>
-      <Text>TasksDetails</Text>
-    </View>
-  );
+const TasksDetailsScreen = () => {
+  return <Text>TaskDetailsScreen</Text>;
 };
-export default TasksDetails;
+export default TasksDetailsScreen;
