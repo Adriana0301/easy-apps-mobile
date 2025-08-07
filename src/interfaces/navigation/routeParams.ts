@@ -19,5 +19,4 @@ export type TabsStackParamList = {
   [ERouteNames.COMMON_TASKS_SCREEN]: undefined;
 };
 
-
 export type AuthNavigationParams = NavigationProp<AuthStackParamList>;

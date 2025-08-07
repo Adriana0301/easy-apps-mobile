@@ -16,16 +16,18 @@ const SignInScreen = () => {
   const goToSignUp = () => {
     navigation.navigate(ERouteNames.SIGN_UP_SCREEN);
   };
-  const {loading, signIn} = useAuth();
+  const { loading, signIn } = useAuth();
 
   return (
     <View style={styles.container}>
       <SignInLogo />
       <Formik
-        initialValues={{ email: '', password: '' }}
+        initialValues={{
+          email: 'Password123@gmail.com',
+          password: 'Password123@',
+        }}
         onSubmit={values => {
           signIn(values.email, values.password);
-
         }}
         validationSchema={validationSchemaSignIn}
       >
@@ -48,7 +50,11 @@ const SignInScreen = () => {
               {errors.password && <TextError error={errors.password} />}
             </View>
             <View style={styles.inputButtonContainer}>
-              <AppButton isLoading={loading} onPress={() => handleSubmit()} title="Log in" />
+              <AppButton
+                isLoading={loading}
+                onPress={() => handleSubmit()}
+                title="Log in"
+              />
               <AppButton onPress={goToSignUp} title="Go To Sign Up" />
             </View>
           </View>

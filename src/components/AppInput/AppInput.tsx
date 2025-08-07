@@ -14,20 +14,21 @@ import styles from './AppInput.styles';
 type AppInputProps = {
   typeOfInput?: 'password';
   label: string;
+  theme?: 'dark';
 } & TextInputProps;
 
-const AppInput: React.FC<AppInputProps> = ({ typeOfInput, label, ...rest }) => {
+const AppInput: React.FC<AppInputProps> = ({ typeOfInput, label, theme, ...rest }) => {
   const [isHidden, setIsHidden] = useState(true);
 
   return (
     <View>
-      <Text style={styles.text}>{label}</Text>
+      <Text style={theme === 'dark' ? styles.textDark : styles.text}>{label}</Text>
       <TextInput
         {...rest}
         autoCapitalize="none"
-        style={styles.input}
+        style={[styles.input, theme === 'dark' ? styles.inputColorDark : styles.inputColor]}
         secureTextEntry={typeOfInput === 'password' && isHidden ? true : false}
-        placeholderTextColor={Colors.lightViolet}
+        placeholderTextColor={theme==='dark'? Colors.black : Colors.lightViolet}
       />
       {typeOfInput === 'password' && (
         <TouchableOpacity
