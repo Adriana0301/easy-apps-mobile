@@ -1,10 +1,18 @@
 import { FlatList, View } from 'react-native';
+import ActiveIndicator from '../ActiveIndicator/ActiveIndicator';
 import NoTasksText from '../NoTasksText/NoTasksText';
 import styles from './MyTasksList.styles';
 import Item from './MyTasksListItem/MyTasksListItem';
 import tasks from './tasks';
+// import useTasks from '../../hooks/useTasks';
 
 const MyTasksList = () => {
+  // const {loading, tasks, } = useTasks();
+  const loading = false;
+  if (loading) {
+    return <ActiveIndicator />;
+  }
+
   return (
     <View style={styles.container}>
       {!tasks.length ? (
