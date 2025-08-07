@@ -1,6 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { TasksState } from '../../interfaces/tasks/tasks';
-import { getTasksAsyncAction } from '../actions/tasksActions';
+import {
+  createTaskAsyncAction,
+  deleteTaskAsyncAction,
+  getTaskByIdAsyncAction,
+  getTasksAsyncAction,
+} from '../actions/tasksActions';
 
 const initialState: TasksState = {
   isLoading: false,
@@ -25,6 +30,18 @@ const tasksSlice = createSlice({
       .addCase(getTasksAsyncAction.fulfilled, (state, action) => {
         state.isLoading = false;
         state.tasks = action.payload;
+        state.isError = null;
+      })
+      .addCase(getTaskByIdAsyncAction.pending, state => {
+        state.isLoading = true;
+        state.isError = null;
+      })
+      .addCase(createTaskAsyncAction.pending, state => {
+        state.isLoading = true;
+        state.isError = null;
+      })
+      .addCase(deleteTaskAsyncAction.pending, state => {
+        state.isLoading = true;
         state.isError = null;
       });
   },
