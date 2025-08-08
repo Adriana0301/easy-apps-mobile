@@ -1,9 +1,10 @@
 import { useNavigation } from '@react-navigation/native';
-import { Alert, Pressable, Text, View } from 'react-native';
+import { Alert, Pressable, View } from 'react-native';
 import BinIcon from '../../../assets/icons/BinIcon';
 import ChangeIcon from '../../../assets/icons/ChangeIcon';
 import { ERouteNames } from '../../../interfaces/navigation/routeNames';
 import { AppNavigationParams } from '../../../interfaces/navigation/routeParams';
+import CheckItem from '../../CheckItem/CheckItem';
 import IconButton from '../../IconButton/IconButton';
 import styles from './MyTasksListItem.styles';
 
@@ -18,7 +19,7 @@ const Item = ({ title, done, id }: ItemProps) => {
         navigation.navigate(ERouteNames.TASK_DETAILS, { taskId: id })
       }
     >
-      <Text style={styles.title}>{title}</Text>
+      <CheckItem />
       <View style={styles.iconsWrapper}>
         <IconButton
           Icon={BinIcon}
