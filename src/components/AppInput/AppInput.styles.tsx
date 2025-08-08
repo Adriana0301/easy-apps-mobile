@@ -3,16 +3,25 @@ import Colors from '../../theme/colors';
 
 const styles = StyleSheet.create({
   input: {
-    color: Colors.lightViolet,
     borderWidth: 1,
-    borderColor: Colors.white,
     borderRadius: 12,
     marginTop: 6,
     padding: 13,
     width: '100%',
   },
+  inputColor: {
+    color: Colors.lightViolet,
+    borderColor: Colors.white,
+  },
+  inputColorDark: {
+    color: Colors.black,
+    borderColor: Colors.gray,
+  },
   text: {
     color: Colors.lightViolet,
+  },
+  textDark: {
+    color: Colors.gray,
   },
   isVisiblePassword: {
     position: 'absolute',
