@@ -15,7 +15,7 @@ const MyTasksList = () => {
 
   return (
     <View style={styles.container}>
-      {!tasks.length ? (
+      {tasks.length === 0 ? (
         <NoTasksText />
       ) : (
         <FlatList
