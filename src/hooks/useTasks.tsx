@@ -1,11 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { TaskState } from '../interfaces/tasks/tasks';
 import { getTasksAsyncAction } from '../redux/actions/tasksActions';
 import { TAppDispatch, TRootState } from '../redux/store';
 
 const useTasks = () => {
   const dispatch = useDispatch<TAppDispatch>();
 
-  const tasks = useSelector<TRootState, any[]>(
+  const tasks = useSelector<TRootState, TaskState[]>(
     (state: TRootState) => state.tasks.tasks,
   );
   const total = useSelector<TRootState, number>(

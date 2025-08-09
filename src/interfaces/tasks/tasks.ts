@@ -4,9 +4,17 @@ export type TasksPayload = {
   files?: string;
 };
 
+export type TaskState = {
+  id: number;
+  title: string;
+  description: string;
+  done: boolean;
+  file?: string;
+};
+
 export type TasksState = {
   isLoading: boolean;
   isError: string | null;
-  tasks: any[];
+  tasks: TaskState[];
   total: number;
 };

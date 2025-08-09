@@ -45,6 +45,15 @@ const tasksSlice = createSlice({
       .addCase(deleteTaskAsyncAction.pending, state => {
         state.isLoading = true;
         state.isError = null;
+      })
+      .addCase(deleteTaskAsyncAction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.payload as string;
+      })
+      .addCase(deleteTaskAsyncAction.fulfilled, (state, action) => {
+        state.tasks = state.tasks.filter(task => {
+          return task.id !== action.payload.tasks;
+        });
       });
   },
 });

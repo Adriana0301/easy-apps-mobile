@@ -34,7 +34,7 @@ export const getTasksAsyncAction = createAsyncThunk(
 
 export const getTaskByIdAsyncAction = createAsyncThunk(
   '/tasks/:id',
-  async (id: string, { rejectWithValue }) => {
+  async (id: number, { rejectWithValue }) => {
     try {
       const { data } = await taskByIdRequest(id);
       return data;
@@ -80,7 +80,7 @@ export const createTaskAsyncAction = createAsyncThunk(
 
 export const deleteTaskAsyncAction = createAsyncThunk(
   'task/:id',
-  async (id: string, { rejectWithValue }) => {
+  async (id: number, { rejectWithValue }) => {
     try {
       const { data } = await taskDeleteRequest(id);
       return data;
