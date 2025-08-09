@@ -10,7 +10,7 @@ import styles from './MyTasksListItem.styles';
 
 type ItemProps = { id: string; title: string; done: boolean };
 
-const Item = ({ title, done, id }: ItemProps) => {
+const Item = ({ id, done, title }: ItemProps) => {
   const navigation = useNavigation<AppNavigationParams>();
   return (
     <Pressable
@@ -19,7 +19,7 @@ const Item = ({ title, done, id }: ItemProps) => {
         navigation.navigate(ERouteNames.TASK_DETAILS, { taskId: id })
       }
     >
-      <CheckItem />
+      <CheckItem title={title} />
       <View style={styles.iconsWrapper}>
         <IconButton
           Icon={BinIcon}

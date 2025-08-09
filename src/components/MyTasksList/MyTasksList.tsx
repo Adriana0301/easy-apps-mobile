@@ -1,14 +1,12 @@
 import { FlatList, View } from 'react-native';
+import useTasks from '../../hooks/useTasks';
 import ActiveIndicator from '../ActiveIndicator/ActiveIndicator';
 import NoTasksText from '../NoTasksText/NoTasksText';
 import styles from './MyTasksList.styles';
 import Item from './MyTasksListItem/MyTasksListItem';
-import tasks from './tasks';
-// import useTasks from '../../hooks/useTasks';
 
 const MyTasksList = () => {
-  // const {loading, tasks, } = useTasks();
-  const loading = false;
+  const { tasks, loading } = useTasks();
   if (loading) {
     return <ActiveIndicator />;
   }
@@ -25,11 +23,8 @@ const MyTasksList = () => {
           )}
           keyExtractor={item => item.id}
           style={styles.list}
-          getItemLayout={(data, index) => ({
-            length: 60,
-            offset: 60 * index,
-            index,
-          })}
+          initialNumToRender={1}
+          showsVerticalScrollIndicator={false}
         />
       )}
     </View>

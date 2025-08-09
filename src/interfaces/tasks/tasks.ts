@@ -7,5 +7,6 @@ export type TasksPayload = {
 export type TasksState = {
   isLoading: boolean;
   isError: string | null;
-  tasks: [];
+  tasks: any[];
+  total: number;
 };

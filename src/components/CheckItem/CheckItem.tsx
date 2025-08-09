@@ -4,9 +4,12 @@ import CheckActiveIcon from '../../assets/icons/CheckActiveIcon';
 import CheckIcon from '../../assets/icons/CheckIcon';
 import styles from './CheckItem.styles';
 
-const CheckItem = () => {
-  const [done, setDone] = useState(false);
-
+type CheckProps = {
+  title: string;
+};
+const CheckItem = ({ title }: CheckProps) => {
+  const [done, setDone] = useState(false); // when we have request for update tasks,
+  // we will change 'done' in backend
   const toggleDone = () => {
     setDone(prev => !prev);
   };
@@ -15,12 +18,12 @@ const CheckItem = () => {
       {done ? (
         <View style={styles.container}>
           <CheckActiveIcon />
-          <Text style={styles.changedText}>Text</Text>
+          <Text style={styles.changedText}>{title}</Text>
         </View>
       ) : (
         <View style={styles.container}>
           <CheckIcon />
-          <Text>Text</Text>
+          <Text>{title}</Text>
         </View>
       )}
     </TouchableOpacity>

@@ -1,10 +1,10 @@
 import axiosInstance from './axiosInstance';
 
 export const tasksRequest = async () => {
-  return axiosInstance.get('/tasks');
+  return axiosInstance.get('/tasks', { params: { limit: 1000 } });
 };
 
-export const taskByIdRequest = async (id: string) => {
+export const taskByIdRequest = async (id: number) => {
   return axiosInstance.get(`/tasks/${id}`);
 };
 
@@ -33,6 +33,6 @@ export const tasksCreateRequest = async (
   });
 };
 
-export const taskDeleteRequest = (id: string) => {
+export const taskDeleteRequest = (id: number) => {
   return axiosInstance.delete(`/tasks/${id}`);
 };

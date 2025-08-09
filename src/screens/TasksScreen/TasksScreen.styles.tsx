@@ -1,9 +1,12 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   tasksWrapper: {
-    overflow: 'hidden',
-    marginTop: 29,
+    flex: 1,
+    paddingTop: 29,
     paddingRight: 15,
     paddingLeft: 15,
   },
