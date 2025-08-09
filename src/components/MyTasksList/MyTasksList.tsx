@@ -21,7 +21,7 @@ const MyTasksList = () => {
           renderItem={({ item }) => (
             <Item id={item.id} title={item.title} done={item.done} />
           )}
-          keyExtractor={item => item.id}
+          keyExtractor={item => item.id.toString()}
           style={styles.list}
           initialNumToRender={1}
           showsVerticalScrollIndicator={false}
