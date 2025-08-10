@@ -59,12 +59,15 @@ export const getTaskByIdAsyncAction = createAsyncThunk(
 export const createTaskAsyncAction = createAsyncThunk(
   '/tasks',
   async (
-    { title, description, files }: TasksPayload,
+    { title, description, files, onSuccess }: TasksPayload,
     { rejectWithValue, dispatch },
   ) => {
     try {
       await tasksCreateRequest(title, description, files);
-      await dispatch(getTasksAsyncAction());
+      dispatch(getTasksAsyncAction());
+      if (onSuccess) {
+        onSuccess();
+      }
     } catch (error) {
       let errorMessage = 'An unexpected error occurred';
       if (isAxiosError(error)) {

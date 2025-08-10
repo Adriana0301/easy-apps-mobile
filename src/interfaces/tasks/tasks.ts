@@ -2,6 +2,7 @@ export type TasksPayload = {
   title: string;
   description: string;
   files?: string[];
+  onSuccess?: () => void;
 };
 
 export type TaskState = {

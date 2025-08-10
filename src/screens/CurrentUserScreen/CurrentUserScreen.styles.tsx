@@ -5,21 +5,20 @@ const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
     backgroundColor: Colors.lightGray,
-    justifyContent: 'center',
-    paddingTop: '34%',
- },
+  },
   container: {
     paddingRight: 20,
     paddingLeft: 20,
     paddingBottom: 16,
     flex: 1,
     justifyContent: 'space-around',
+    marginTop: 25,
   },
-  bottomContainer:{
-    justifyContent: 'space-around',
+  bottomContainer: {
+    justifyContent: 'space-between',
     flex: 1,
   },
-  inputContainer:{
+  inputContainer: {
     gap: 17,
   },
   buttonContainer: {

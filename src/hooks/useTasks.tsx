@@ -25,8 +25,13 @@ const useTasks = () => {
     dispatch(getTasksAsyncAction());
   };
 
-  const createTask = (title: string, description: string, files?: string[]) => {
-    dispatch(createTaskAsyncAction({ title, description, files }));
+  const createTask = (
+    title: string,
+    description: string,
+    files: string[],
+    onSuccess?: () => void,
+  ) => {
+    dispatch(createTaskAsyncAction({ title, description, files, onSuccess }));
   };
 
   return {
