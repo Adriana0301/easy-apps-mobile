@@ -1,6 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { TaskState } from '../interfaces/tasks/tasks';
-import { getTasksAsyncAction } from '../redux/actions/tasksActions';
+import {
+  createTaskAsyncAction,
+  getTasksAsyncAction,
+} from '../redux/actions/tasksActions';
 import { TAppDispatch, TRootState } from '../redux/store';
 
 const useTasks = () => {
@@ -10,7 +13,7 @@ const useTasks = () => {
     (state: TRootState) => state.tasks.tasks,
   );
   const total = useSelector<TRootState, number>(
-    (state: TRootState) => state.tasks.total,
+    (state: TRootState) => state.tasks.tasks.length,
   );
   const loading = useSelector<TRootState, boolean>(
     (state: TRootState) => state.tasks.isLoading,
@@ -22,12 +25,17 @@ const useTasks = () => {
     dispatch(getTasksAsyncAction());
   };
 
+  const createTask = (title: string, description: string, files?: string[]) => {
+    dispatch(createTaskAsyncAction({ title, description, files }));
+  };
+
   return {
     error,
     tasks,
     total,
     loading,
     getAllTasks,
+    createTask,
   };
 };
 

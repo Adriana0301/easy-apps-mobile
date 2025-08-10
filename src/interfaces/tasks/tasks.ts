@@ -1,7 +1,7 @@
 export type TasksPayload = {
   title: string;
   description: string;
-  files?: string;
+  files?: string[];
 };
 
 export type TaskState = {
@@ -16,5 +16,4 @@ export type TasksState = {
   isLoading: boolean;
   isError: string | null;
   tasks: TaskState[];
-  total: number;
 };

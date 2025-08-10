@@ -13,7 +13,7 @@ import styles from './MyTasksListItem.styles';
 
 type ItemProps = { id: number; title: string; done: boolean };
 
-const Item = ({ id, done, title }: ItemProps) => {
+const Item = ({ id, title }: ItemProps) => {
   const navigation = useNavigation<AppNavigationParams>();
   const dispatch = useDispatch<TAppDispatch>();
 

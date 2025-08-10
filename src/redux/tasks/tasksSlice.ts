@@ -11,7 +11,6 @@ const initialState: TasksState = {
   isLoading: false,
   isError: null,
   tasks: [],
-  total: 0,
 };
 
 const tasksSlice = createSlice({
@@ -31,7 +30,6 @@ const tasksSlice = createSlice({
       .addCase(getTasksAsyncAction.fulfilled, (state, action) => {
         state.isLoading = false;
         state.tasks = action.payload.tasks;
-        state.total = action.payload.total;
         state.isError = null;
       })
       .addCase(getTaskByIdAsyncAction.pending, state => {
@@ -41,6 +39,10 @@ const tasksSlice = createSlice({
       .addCase(createTaskAsyncAction.pending, state => {
         state.isLoading = true;
         state.isError = null;
+      })
+      .addCase(createTaskAsyncAction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.payload as string;
       })
       .addCase(deleteTaskAsyncAction.pending, state => {
         state.isLoading = true;

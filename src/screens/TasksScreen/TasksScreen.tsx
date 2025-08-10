@@ -12,7 +12,7 @@ const TasksScreen = () => {
     if (!tasks.length) {
       getAllTasks();
     }
-  }, [tasks.length]);
+  }, []);
 
   return (
     <View style={styles.container}>
