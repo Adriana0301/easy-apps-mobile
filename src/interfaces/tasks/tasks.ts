@@ -9,7 +9,7 @@ export type TaskState = {
   title: string;
   description: string;
   done: boolean;
-  file?: string;
+  files?: string[];
 };
 
 export type TasksState = {
