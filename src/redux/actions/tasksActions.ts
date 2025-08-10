@@ -63,7 +63,6 @@ export const createTaskAsyncAction = createAsyncThunk(
     { rejectWithValue, dispatch },
   ) => {
     try {
-      console.log('create');
       await tasksCreateRequest(title, description, files);
       await dispatch(getTasksAsyncAction());
     } catch (error) {

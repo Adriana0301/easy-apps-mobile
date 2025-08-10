@@ -26,7 +26,6 @@ const useTasks = () => {
   };
 
   const createTask = (title: string, description: string, files?: string[]) => {
-    console.log('createTask hook');
     dispatch(createTaskAsyncAction({ title, description, files }));
   };
 
