@@ -1,29 +1,34 @@
-import { Alert, Text, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import GoBackButton from '../../assets/icons/GoBack';
 import styles from './AppHeader.styles';
 
 type AppHeaderProps = {
   label: string;
   goBackAllowed?: boolean;
-  shouldDelete?: boolean;
+  onDelete?: () => void;
 };
 
 const AppHeader: React.FC<AppHeaderProps> = ({
   label,
   goBackAllowed,
-  shouldDelete,
+  onDelete,
 }) => {
   return (
     <View style={styles.header}>
-      {goBackAllowed && <GoBackButton />}
+      {goBackAllowed ? (
+        <View style={styles.goBackButtonContainer}>
+          <GoBackButton />
+        </View>
+      ) : (
+        <View />
+      )}
       <Text style={styles.headerLabel}>{label}</Text>
-      {shouldDelete && (
-        <Text
-          onPress={() => Alert.alert('deleted')}
-          style={styles.shouldDeleteText}
-        >
-          delete
-        </Text>
+      {onDelete ? (
+        <TouchableOpacity onPress={onDelete}>
+          <Text style={styles.shouldDeleteText}>delete</Text>
+        </TouchableOpacity>
+      ) : (
+        <View />
       )}
     </View>
   );

@@ -9,6 +9,9 @@ import {
 } from '../../interfaces/navigation/routeParams';
 import SignInScreen from '../../screens/SignInScreen/SignInScreen';
 import SignUpScreen from '../../screens/SignUpScreen/SingUpScreen';
+import TaskCreatorScreen from '../../screens/TaskCreatorScreen/TaskCreatorScreen';
+import TasksDetailsScreen from '../../screens/TaskDetailsScreen/TaskDetailsScreen';
+import TaskEditorScreen from '../../screens/TaskEditorScreen/TaskEditorScreen';
 import Tabs from '../Tabs/Tabs';
 
 const AuthStack = createNativeStackNavigator<AuthStackParamList>();
@@ -33,6 +36,18 @@ const AppNavigation = () => {
       ) : (
         <AppStack.Navigator screenOptions={{ headerShown: false }}>
           <AppStack.Screen name={ERouteNames.TABS_SCREEN} component={Tabs} />
+          <AppStack.Screen
+            name={ERouteNames.TASK_CREATOR}
+            component={TaskCreatorScreen}
+          />
+          <AppStack.Screen
+            name={ERouteNames.TASK_EDITOR}
+            component={TaskEditorScreen}
+          />
+          <AppStack.Screen
+            name={ERouteNames.TASK_DETAILS}
+            component={TasksDetailsScreen}
+          />
         </AppStack.Navigator>
       )}
     </NavigationContainer>

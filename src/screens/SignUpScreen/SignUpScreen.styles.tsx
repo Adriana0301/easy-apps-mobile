@@ -9,7 +9,6 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   wrapper: {
-    paddingTop: 36,
     paddingBottom: 36,
     justifyContent: 'space-between',
     height: '100%',
