@@ -14,7 +14,6 @@ export const getTasksAsyncAction = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const { data } = await tasksRequest();
-      console.log('tasks', data);
       return data;
     } catch (error) {
       let errorMessage = 'An unexpected error occurred';
@@ -87,10 +86,10 @@ export const createTaskAsyncAction = createAsyncThunk(
 
 export const deleteTaskAsyncAction = createAsyncThunk(
   'task/:id',
-  async (id: number, { rejectWithValue }) => {
+  async (id: number, { rejectWithValue, dispatch }) => {
     try {
-      const { data } = await taskDeleteRequest(id);
-      return data;
+      await taskDeleteRequest(id);
+      dispatch(getTasksAsyncAction());
     } catch (error) {
       let errorMessage = 'An unexpected error occurred';
       if (isAxiosError(error)) {
