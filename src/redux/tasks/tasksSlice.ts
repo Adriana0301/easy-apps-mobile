@@ -11,6 +11,7 @@ const initialState: TasksState = {
   isLoading: false,
   isError: null,
   tasks: [],
+  currentTask: null,
 };
 
 const tasksSlice = createSlice({
@@ -30,10 +31,6 @@ const tasksSlice = createSlice({
       .addCase(getTasksAsyncAction.fulfilled, (state, action) => {
         state.isLoading = false;
         state.tasks = action.payload.tasks;
-        state.isError = null;
-      })
-      .addCase(getTaskByIdAsyncAction.pending, state => {
-        state.isLoading = true;
         state.isError = null;
       })
       .addCase(createTaskAsyncAction.pending, state => {
@@ -56,6 +53,21 @@ const tasksSlice = createSlice({
         state.tasks = state.tasks.filter(task => {
           return task.id !== action.payload.tasks;
         });
+        state.isLoading = false;
+        state.isError = null;
+      })
+      .addCase(getTaskByIdAsyncAction.pending, state => {
+        state.isLoading = true;
+        state.isError = null;
+      })
+      .addCase(getTaskByIdAsyncAction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.payload as string;
+      })
+      .addCase(getTaskByIdAsyncAction.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.currentTask = action.payload;
+        state.isError = null;
       });
   },
 });
