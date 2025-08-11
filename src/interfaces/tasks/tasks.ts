@@ -17,4 +17,5 @@ export type TasksState = {
   isLoading: boolean;
   isError: string | null;
   tasks: TaskState[];
+  currentTask: TaskState | null;
 };

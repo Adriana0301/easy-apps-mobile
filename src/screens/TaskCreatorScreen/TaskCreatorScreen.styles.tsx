@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
+    paddingBottom: 30,
   },
   container: {
     flex: 1,
