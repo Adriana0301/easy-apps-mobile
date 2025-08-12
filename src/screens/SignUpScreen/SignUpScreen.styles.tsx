@@ -7,6 +7,7 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     backgroundColor: Colors.violet,
     height: '100%',
+    paddingBottom: 30,
   },
   wrapper: {
     paddingBottom: 36,

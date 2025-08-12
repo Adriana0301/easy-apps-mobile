@@ -11,7 +11,6 @@ const styles = StyleSheet.create({
   imageContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 20,
   },
 });
 export default styles;
