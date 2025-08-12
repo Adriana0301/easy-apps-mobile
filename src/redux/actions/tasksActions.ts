@@ -14,7 +14,6 @@ export const getTasksAsyncAction = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const { data } = await tasksRequest();
-      console.log('tasks', data);
       return data;
     } catch (error) {
       let errorMessage = 'An unexpected error occurred';

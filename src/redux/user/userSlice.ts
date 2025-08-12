@@ -5,6 +5,7 @@ import {
   getUserInfoAsyncAction,
   updateUserInfoAsyncAction,
 } from '../actions/userActions';
+import { logout } from '../auth/authSlice';
 
 const initialState: UserRequestState = {
   isLoading: false,
@@ -56,7 +57,9 @@ const userSlice = createSlice({
       .addCase(deleteUserAvatarAsyncAction.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.payload as string;
-      });
+      })
+      .addCase(logout, () => initialState);
   },
 });
+
 export default userSlice.reducer;

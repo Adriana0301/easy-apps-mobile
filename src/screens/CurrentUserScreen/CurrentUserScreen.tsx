@@ -2,6 +2,7 @@ import { Formik } from 'formik';
 import { useEffect } from 'react';
 import { Alert, View } from 'react-native';
 import Toast from 'react-native-toast-message';
+import { useDispatch } from 'react-redux';
 import ActiveIndicator from '../../components/ActiveIndicator/ActiveIndicator';
 import AppButton from '../../components/AppButton/AppButton';
 import AppHeader from '../../components/AppHeader/AppHeader';
@@ -14,6 +15,7 @@ import {
   deleteUserAvatarAsyncAction,
   updateUserInfoAsyncAction,
 } from '../../redux/actions/userActions';
+import { logout } from '../../redux/auth/authSlice';
 import validationSchemaUpdateUserInfo from '../../validation/validationSchemaUpdateUserInfo';
 import styles from './CurrentUserScreen.styles';
 
@@ -25,9 +27,32 @@ const showSuccesToast = () => {
 };
 
 const CurrentUserScreen = () => {
+  const dispatch = useDispatch();
   const { pickPhoto } = useGallery();
   const { deleteUserAvatar, updateUserInfo, userInfo, loading, getUserInfo } =
     useUserInfo();
+
+  const handleLogout = () => {
+    Alert.alert(
+      'Confirm Logout',
+      'Are you sure you want to log out?',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Logout cancelled'),
+          style: 'cancel',
+        },
+        {
+          text: 'Logout',
+          onPress: () => {
+            dispatch(logout());
+            console.log('User logged out');
+          },
+        },
+      ],
+      { cancelable: true },
+    );
+  };
 
   useEffect(() => {
     getUserInfo();
@@ -109,10 +134,7 @@ const CurrentUserScreen = () => {
                 </View>
                 <View style={styles.buttonContainer}>
                   <AppButton title="Update" onPress={() => handleSubmit()} />
-                  <AppButton
-                    title="Logout"
-                    onPress={() => Alert.alert('Logout')}
-                  />
+                  <AppButton title="Logout" onPress={handleLogout} />
                 </View>
               </View>
             </View>
