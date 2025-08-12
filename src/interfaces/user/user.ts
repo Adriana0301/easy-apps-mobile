@@ -1,8 +1,8 @@
 export type UserState = {
-  id: string;
-  username: string;
-  email: string;
-  avatar: string;
+  id?: string;
+  username?: string;
+  email?: string;
+  avatar?: string;
 };
 
 export type UserRequestState = {

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { BASE_URL } from '../constants';
-import store from '../redux/store';
+import { logout } from '../redux/auth/authSlice';
+import store, { dispatch } from '../redux/store';
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
@@ -20,9 +21,7 @@ axiosInstance.interceptors.response.use(
   response => response,
   error => {
     if (error.response?.status === 401) {
-      // This part will be implemented during the logout task
-      // because global navigation wouldn`t work because of conditional navigation architecture
-      // dispatch(logoutAction());
+      dispatch(logout());
     }
     return Promise.reject(error);
   },
