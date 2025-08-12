@@ -3,6 +3,8 @@ import Colors from '../../theme/colors';
 
 const styles = StyleSheet.create({
   doneContainer: {
+    paddingRight: 8,
+    paddingLeft: 8,
     borderRadius: 8,
     width: 70,
     height: 30,
@@ -13,6 +15,8 @@ const styles = StyleSheet.create({
   },
   progressContainer: {
     borderRadius: 8,
+    paddingRight: 8,
+    paddingLeft: 8,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 15,

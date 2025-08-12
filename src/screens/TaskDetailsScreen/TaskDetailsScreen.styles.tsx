@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   wrapperButtons: {
     flexDirection: 'row',
     justifyContent: 'center',
-
+    paddingRight: 20,
     gap: 12,
   },
   button: {},

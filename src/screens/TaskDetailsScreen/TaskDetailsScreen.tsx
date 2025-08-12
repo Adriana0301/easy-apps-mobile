@@ -2,6 +2,7 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { useEffect } from 'react';
 import { Alert, FlatList, SafeAreaView, Text, View } from 'react-native';
 import { useDispatch } from 'react-redux';
+import ActiveIndicator from '../../components/ActiveIndicator/ActiveIndicator';
 import AppButton from '../../components/AppButton/AppButton';
 import AppHeader from '../../components/AppHeader/AppHeader';
 import DetailsTaskAttachmentsItem from '../../components/DetailsTaskAttachmentsItem/DetailsTaskAttachmentsItem';
@@ -27,6 +28,7 @@ const TasksDetailsScreen = () => {
   const dispatch = useDispatch<TAppDispatch>();
   const navigation = useNavigation<AppNavigationParams>();
   const { taskId } = route.params;
+
   const filesArray = currentTask?.files
     ? JSON.parse(currentTask.files.toString())
     : [];
@@ -53,43 +55,49 @@ const TasksDetailsScreen = () => {
   return (
     <SafeAreaView style={styles.rootContainer}>
       <AppHeader label="Task Details" goBackAllowed={true} />
-      <View style={styles.container}>
-        <View>
-          <Text style={styles.title}>{currentTask?.title}</Text>
-          <Text style={styles.description}>{currentTask?.description}</Text>
-          <ProgressStatus done={currentTask?.done} />
-          <FlatList
-            data={filesArray}
-            keyExtractor={(item, index) => index.toString()}
-            horizontal
-            renderItem={({ item }) => (
-              <DetailsTaskAttachmentsItem item={item} />
-            )}
-            showsHorizontalScrollIndicator={false}
-          />
-        </View>
-        <View style={styles.wrapperButtons}>
-          <View style={styles.wrapperButton}>
-            <AppButton
-              isLoading={loading}
-              title={'Delete'}
-              style={styles.button}
-              onPress={() => {
-                deleteTaskButton();
-              }}
+      {loading ? (
+        <ActiveIndicator />
+      ) : (
+        <View style={styles.container}>
+          <View>
+            <Text style={styles.title}>{currentTask?.title}</Text>
+            <Text style={styles.description}>{currentTask?.description}</Text>
+            <ProgressStatus done={currentTask?.done} />
+            <FlatList
+              data={filesArray}
+              keyExtractor={(item, index) => index.toString()}
+              horizontal
+              renderItem={({ item }) => (
+                <DetailsTaskAttachmentsItem item={item} />
+              )}
+              showsHorizontalScrollIndicator={false}
             />
           </View>
-          <View style={styles.wrapperButton}>
-            <AppButton
-              title={'Edit'}
-              style={styles.button}
-              onPress={() =>
-                navigation.navigate(ERouteNames.TASK_EDITOR, { taskId: taskId })
-              }
-            />
+          <View style={styles.wrapperButtons}>
+            <View style={styles.wrapperButton}>
+              <AppButton
+                isLoading={loading}
+                title={'Delete'}
+                style={styles.button}
+                onPress={() => {
+                  deleteTaskButton();
+                }}
+              />
+            </View>
+            <View style={styles.wrapperButton}>
+              <AppButton
+                title={'Edit'}
+                style={styles.button}
+                onPress={() =>
+                  navigation.navigate(ERouteNames.TASK_EDITOR, {
+                    taskId: taskId,
+                  })
+                }
+              />
+            </View>
           </View>
         </View>
-      </View>
+      )}
     </SafeAreaView>
   );
 };

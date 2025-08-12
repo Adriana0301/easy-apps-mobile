@@ -10,6 +10,7 @@ const DetailsTaskAttachmentsItem: React.FC<DetailsTaskAttachmentsItemProps> = ({
   item,
 }) => {
   const [modalVisible, setModalVisible] = useState(false);
+
   return (
     <View>
       <TouchableOpacity
