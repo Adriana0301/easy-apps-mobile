@@ -61,7 +61,9 @@ const TasksDetailsScreen = () => {
         <View style={styles.container}>
           <View>
             <Text style={styles.title}>{currentTask?.title}</Text>
-            <Text style={styles.description}>{currentTask?.description}</Text>
+            {currentTask?.description && (
+              <Text style={styles.description}>{currentTask?.description}</Text>
+            )}
             <ProgressStatus done={currentTask?.done} />
             <FlatList
               data={filesArray}
