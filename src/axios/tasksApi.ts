@@ -10,13 +10,15 @@ export const taskByIdRequest = async (id: number) => {
 
 export const tasksCreateRequest = async (
   title: string,
-  description: string,
+  description?: string,
   files?: string[],
 ) => {
   const formData = new FormData();
 
   formData.append('title', title);
-  formData.append('description', description);
+  if (description) {
+    formData.append('description', description);
+  }
   if (files?.length) {
     for (let i = 0; i < files.length; i++) {
       const file = {

@@ -1,6 +1,6 @@
 export type TasksPayload = {
   title: string;
-  description: string;
+  description?: string;
   files?: string[];
   onSuccess?: () => void;
 };
@@ -8,7 +8,7 @@ export type TasksPayload = {
 export type TaskState = {
   id: number;
   title: string;
-  description: string;
+  description?: string;
   done: boolean;
   files?: string[];
 };

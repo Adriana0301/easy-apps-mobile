@@ -49,7 +49,7 @@ const TaskCreatorScreen = () => {
         onSubmit={value => {
           createTask(
             value.title,
-            value.description,
+            value?.description,
             attachments,
             goToMyTasksScreen,
           );

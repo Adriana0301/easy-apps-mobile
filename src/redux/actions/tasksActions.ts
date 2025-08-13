@@ -75,10 +75,12 @@ export const createTaskAsyncAction = createAsyncThunk(
           console.log(error.response);
         } else if (error.response?.data?.errors) {
           errorMessage = error.response?.data?.errors.join('\n');
+          console.log('errorMessage', errorMessage);
           console.log(error.response);
         }
       }
       Alert.alert(errorMessage);
+      console.log(errorMessage);
       return rejectWithValue(errorMessage);
     }
   },
