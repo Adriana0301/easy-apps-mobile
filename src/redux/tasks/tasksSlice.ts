@@ -6,6 +6,7 @@ import {
   getTaskByIdAsyncAction,
   getTasksAsyncAction,
 } from '../actions/tasksActions';
+import { logout } from '../auth/authSlice';
 
 const initialState: TasksState = {
   isLoading: false,
@@ -68,7 +69,8 @@ const tasksSlice = createSlice({
         state.isLoading = false;
         state.currentTask = action.payload;
         state.isError = null;
-      });
+      })
+      .addCase(logout, () => initialState);
   },
 });
 export default tasksSlice.reducer;
