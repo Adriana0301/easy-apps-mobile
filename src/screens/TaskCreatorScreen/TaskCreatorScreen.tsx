@@ -8,7 +8,7 @@ import AppInput from '../../components/AppInput/AppInput';
 import TaskAttachments from '../../components/TaskAttachments/TaskAttachments';
 import TextError from '../../components/TextError/TextError';
 import useTasks from '../../hooks/useTasks';
-import validationSchemaAddTasks from '../../validation/validationSchemaAddTask';
+import validationSchemaEditTask from '../../validation/validationSchemaEditTask';
 import styles from './TaskCreatorScreen.styles';
 
 const TaskCreatorScreen = () => {
@@ -42,10 +42,16 @@ const TaskCreatorScreen = () => {
 
   return (
     <SafeAreaView style={styles.wrapper}>
-      <AppHeader label="Add new task" goBackAllowed={true} />
+      <AppHeader
+        label="Add new task"
+        goBackAllowed={true}
+        onDelete={() => {
+          console.log('Deleted.');
+        }}
+      />
       <Formik
         initialValues={{ title: '', description: '' }}
-        validationSchema={validationSchemaAddTasks}
+        validationSchema={validationSchemaEditTask}
         onSubmit={value => {
           createTask(
             value.title,

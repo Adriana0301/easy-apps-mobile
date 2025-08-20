@@ -5,25 +5,30 @@ import CheckIcon from '../../assets/icons/CheckIcon';
 import styles from './CheckItem.styles';
 
 type CheckProps = {
-  title: string;
+  title?: string;
+  label?: string;
+  onChange?: (isDone: boolean) => void;
 };
-const CheckItem = ({ title }: CheckProps) => {
+const CheckItem = ({ title, label, onChange }: CheckProps) => {
   const [done, setDone] = useState(false); // when we have request for update tasks,
   // we will change 'done' in backend
   const toggleDone = () => {
     setDone(prev => !prev);
+    onChange?.(!done);
   };
   return (
     <TouchableOpacity onPress={toggleDone}>
       {done ? (
         <View style={styles.container}>
+          {label && <Text>{label}</Text>}
           <CheckActiveIcon />
-          <Text style={styles.changedText}>{title}</Text>
+          {title && <Text style={styles.changedText}>{title}</Text>}
         </View>
       ) : (
         <View style={styles.container}>
+          {label && <Text>{label}</Text>}
           <CheckIcon />
-          <Text>{title}</Text>
+          {title && <Text>{title}</Text>}
         </View>
       )}
     </TouchableOpacity>
