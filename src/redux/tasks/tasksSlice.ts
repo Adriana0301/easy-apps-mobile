@@ -51,10 +51,7 @@ const tasksSlice = createSlice({
         state.isLoading = false;
         state.isError = action.payload as string;
       })
-      .addCase(deleteTaskAsyncAction.fulfilled, (state, action) => {
-        state.tasks = state.tasks.filter(task => {
-          return task.id !== action.payload.tasks;
-        });
+      .addCase(deleteTaskAsyncAction.fulfilled, state => {
         state.isLoading = false;
         state.isError = null;
       })
@@ -79,16 +76,6 @@ const tasksSlice = createSlice({
       .addCase(changeTaskStatusAsyncAction.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.payload as string;
-      })
-      .addCase(changeTaskStatusAsyncAction.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isError = null;
-        const updatedTask = state.tasks.find(
-          task => task.id === action.payload.id,
-        );
-        if (updatedTask) {
-          updatedTask.done = action.payload.done;
-        }
       });
   },
 });
