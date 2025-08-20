@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { TasksState } from '../../interfaces/tasks/tasks';
 import {
+  changeTaskStatusAsyncAction,
   createTaskAsyncAction,
   deleteTaskAsyncAction,
   getTaskByIdAsyncAction,
@@ -70,7 +71,25 @@ const tasksSlice = createSlice({
         state.currentTask = action.payload;
         state.isError = null;
       })
-      .addCase(logout, () => initialState);
+      .addCase(logout, () => initialState)
+      .addCase(changeTaskStatusAsyncAction.pending, state => {
+        state.isLoading = true;
+        state.isError = null;
+      })
+      .addCase(changeTaskStatusAsyncAction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.payload as string;
+      })
+      .addCase(changeTaskStatusAsyncAction.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = null;
+        const updatedTask = state.tasks.find(
+          task => task.id === action.payload.id,
+        );
+        if (updatedTask) {
+          updatedTask.done = action.payload.done;
+        }
+      });
   },
 });
 export default tasksSlice.reducer;

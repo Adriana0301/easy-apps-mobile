@@ -19,3 +19,8 @@ export type TasksState = {
   tasks: TaskState[];
   currentTask: TaskState | null;
 };
+
+export type StatusPayload = {
+  id: number;
+  done: boolean;
+};

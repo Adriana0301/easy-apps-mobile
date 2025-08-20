@@ -13,7 +13,7 @@ import styles from './MyTasksListItem.styles';
 
 type ItemProps = { id: number; title: string; done: boolean };
 
-const Item = ({ id, title }: ItemProps) => {
+const Item = ({ id, title, done }: ItemProps) => {
   const navigation = useNavigation<AppNavigationParams>();
   const dispatch = useDispatch<TAppDispatch>();
 
@@ -33,7 +33,7 @@ const Item = ({ id, title }: ItemProps) => {
         navigation.navigate(ERouteNames.TASK_DETAILS, { taskId: id })
       }
     >
-      <CheckItem title={title} />
+      <CheckItem title={title} id={id} done={done} />
       <View style={styles.iconsWrapper}>
         <IconButton Icon={BinIcon} onPress={deleteTaskButton} />
         <IconButton

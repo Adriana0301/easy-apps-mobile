@@ -40,3 +40,15 @@ export const tasksCreateRequest = async (
 export const taskDeleteRequest = (id: number) => {
   return axiosInstance.delete(`/tasks/${id}`);
 };
+
+export const changeTaskStatusRequest = (id: number, done: boolean) => {
+  const formData = new FormData();
+
+  formData.append('done', String(done));
+
+  return axiosInstance.patch(`/tasks/${id}`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+};
