@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     borderRadius: 12,
     marginBottom: 16,
+    justifyContent: 'center',
   },
   text: {
     fontWeight: '600',

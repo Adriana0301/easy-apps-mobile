@@ -1,5 +1,5 @@
 import { JSX } from 'react';
-import { ScrollView, Text } from 'react-native';
+import { Text, View } from 'react-native';
 import styles from './CommonTaskItem.styles';
 
 type CommonTasksItemProps = {
@@ -8,19 +8,11 @@ type CommonTasksItemProps = {
 
 const CommonTasksItem = ({ title }: CommonTasksItemProps): JSX.Element => {
   return (
-    <ScrollView
-      horizontal
-      showsHorizontalScrollIndicator={false}
-      style={styles.container}
-      contentContainerStyle={{
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
+    <View style={styles.container}>
       <Text numberOfLines={1} style={styles.text}>
-        {title}
+        {title.slice(0, 30) + (title.length > 30 ? '...' : '')}
       </Text>
-    </ScrollView>
+    </View>
   );
 };
 

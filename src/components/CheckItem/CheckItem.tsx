@@ -19,12 +19,14 @@ const CheckItem = ({ title, id, done }: CheckProps) => {
       {done ? (
         <View style={styles.container}>
           <CheckActiveIcon />
-          <Text style={styles.changedText}>{title}</Text>
+          <Text style={styles.changedText}>
+            {title.slice(0, 30) + (title.length > 30 ? '...' : '')}
+          </Text>
         </View>
       ) : (
         <View style={styles.container}>
           <CheckIcon />
-          <Text>{title}</Text>
+          <Text> {title.slice(0, 30) + (title.length > 30 ? '...' : '')}</Text>
         </View>
       )}
     </TouchableOpacity>

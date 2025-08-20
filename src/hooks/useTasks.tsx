@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { TaskState } from '../interfaces/tasks/tasks';
 import {
+  allTasksAsyncAction,
   changeTaskStatusAsyncAction,
   createTaskAsyncAction,
   getTaskByIdAsyncAction,
@@ -46,6 +47,9 @@ const useTasks = () => {
   const changeTaskStatus = (id: number, done: boolean) => {
     dispatch(changeTaskStatusAsyncAction({ id, done }));
   };
+  const getCommonTasks = (page: number, tasksPerPage: number) => {
+    dispatch(allTasksAsyncAction({ page, tasksPerPage }));
+  };
 
   return {
     error,
@@ -57,6 +61,7 @@ const useTasks = () => {
     createTask,
     getTaskById,
     changeTaskStatus,
+    getCommonTasks,
   };
 };
 
