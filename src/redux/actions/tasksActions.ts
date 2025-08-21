@@ -71,6 +71,7 @@ export const createTaskAsyncAction = createAsyncThunk(
     try {
       await tasksCreateRequest(title, description, files);
       dispatch(getTasksAsyncAction());
+      dispatch(allTasksAsyncAction({ page: 1, tasksPerPage: 10 }));
       if (onSuccess) {
         onSuccess();
       }
