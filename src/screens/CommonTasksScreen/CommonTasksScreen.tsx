@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { FlatList, Text, View } from 'react-native';
 import ActiveIndicator from '../../components/ActiveIndicator/ActiveIndicator';
 import AppHeader from '../../components/AppHeader/AppHeader';
@@ -7,10 +8,21 @@ import useTasks from '../../hooks/useTasks';
 import styles from './CommonTasksScreen.styles';
 
 const CommonTasksScreen = () => {
-  const { loading, error } = useTasks();
-  const { data, refreshing, handleRefresh, handleLoadMore, hasMore } =
-    usePagination();
-  console.log('data', data);
+  const { loading, error, getCommonTasks } = useTasks();
+  const {
+    data,
+    page,
+    tasksPerPage,
+    refreshing,
+    handleRefresh,
+    handleLoadMore,
+    hasMore,
+  } = usePagination();
+
+  useEffect(() => {
+    getCommonTasks(page, tasksPerPage);
+  }, [page, tasksPerPage]);
+
   if (loading && data.length === 0) {
     return <ActiveIndicator />;
   }
