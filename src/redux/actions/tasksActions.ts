@@ -43,6 +43,7 @@ export const getTaskByIdAsyncAction = createAsyncThunk(
   async (id: number, { rejectWithValue }) => {
     try {
       const { data } = await taskByIdRequest(id);
+
       return data;
     } catch (error) {
       let errorMessage = 'An unexpected error occurred';
@@ -142,7 +143,7 @@ export const allTasksAsyncAction = createAsyncThunk(
   'tasks/all',
   async ({ page, tasksPerPage }: AllTasksParams, { rejectWithValue }) => {
     try {
-      const data = await allTasksRequest(page, tasksPerPage);
+      const { data } = await allTasksRequest(page, tasksPerPage);
       return data;
     } catch (error) {
       let errorMessage = 'An unexpected error occurred';

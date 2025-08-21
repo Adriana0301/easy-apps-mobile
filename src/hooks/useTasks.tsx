@@ -21,6 +21,12 @@ const useTasks = () => {
   const currentTask = useSelector<TRootState, TaskState | null>(
     (state: TRootState) => state.tasks.currentTask,
   );
+  const commonTasks = useSelector<TRootState, TaskState[]>(
+    (state: TRootState) => state.tasks.commonTasks,
+  );
+  const totalCommonTasks = useSelector<TRootState, number>(
+    (state: TRootState) => state.tasks.taskTotalCount,
+  );
   const loading = useSelector<TRootState, boolean>(
     (state: TRootState) => state.tasks.isLoading,
   );
@@ -55,6 +61,8 @@ const useTasks = () => {
     error,
     tasks,
     currentTask,
+    commonTasks,
+    totalCommonTasks,
     total,
     loading,
     getAllTasks,

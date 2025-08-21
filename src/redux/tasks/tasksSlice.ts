@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { TasksState } from '../../interfaces/tasks/tasks';
 import {
+  allTasksAsyncAction,
   changeTaskStatusAsyncAction,
   createTaskAsyncAction,
   deleteTaskAsyncAction,
@@ -14,6 +15,8 @@ const initialState: TasksState = {
   isError: null,
   tasks: [],
   currentTask: null,
+  commonTasks: [],
+  taskTotalCount: 0,
 };
 
 const tasksSlice = createSlice({
@@ -76,6 +79,25 @@ const tasksSlice = createSlice({
       .addCase(changeTaskStatusAsyncAction.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.payload as string;
+      })
+      .addCase(allTasksAsyncAction.pending, state => {
+        state.isLoading = true;
+        state.isError = null;
+      })
+      .addCase(allTasksAsyncAction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.payload as string;
+      })
+      .addCase(allTasksAsyncAction.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = null;
+
+        if (action.meta.arg.page === 1) {
+          state.commonTasks = action.payload.tasks;
+        } else {
+          state.commonTasks = [...state.commonTasks, ...action.payload.tasks];
+        }
+        state.taskTotalCount = action.payload.taskTotalCount;
       });
   },
 });

@@ -18,6 +18,8 @@ export type TasksState = {
   isError: string | null;
   tasks: TaskState[];
   currentTask: TaskState | null;
+  commonTasks: TaskState[];
+  taskTotalCount: number;
 };
 
 export type StatusPayload = {
