@@ -42,25 +42,28 @@ const useTasks = () => {
   const error = useSelector<TRootState, string | null>(
     (state: TRootState) => state.tasks.isError,
   );
-  const getAllTasks = () => {
+  const getAllTasks = useCallback(() => {
     dispatch(getTasksAsyncAction());
+  }, [dispatch]);
+
+  const getTaskById = (_id: string) => {
+    dispatch(getTaskByIdAsyncAction(_id));
   };
 
-  const getTaskById = (id: number) => {
-    dispatch(getTaskByIdAsyncAction(id));
-  };
+  const createTask = useCallback(
+    (
+      title: string,
+      description: string,
+      files?: string[],
+      onSuccess?: () => void,
+    ) => {
+      dispatch(createTaskAsyncAction({ title, description, files, onSuccess }));
+    },
+    [dispatch],
+  );
 
-  const createTask = (
-    title: string,
-    description: string,
-    files?: string[],
-    onSuccess?: () => void,
-  ) => {
-    dispatch(createTaskAsyncAction({ title, description, files, onSuccess }));
-  };
-
-  const changeTaskStatus = (id: number, done: boolean) => {
-    dispatch(changeTaskStatusAsyncAction({ id, done }));
+  const changeTaskStatus = (_id: string, done: boolean) => {
+    dispatch(changeTaskStatusAsyncAction({ _id, done }));
   };
   const getCommonTasks = useCallback(
     (page: number, tasksPerPage: number) => {
@@ -70,7 +73,7 @@ const useTasks = () => {
   );
 
   const editTask = (
-    id: number,
+    id: string,
     done: boolean,
     title: string,
     description?: string,
@@ -81,7 +84,7 @@ const useTasks = () => {
     );
   };
 
-  const deleteFile = (id: number, file: string) => {
+  const deleteFile = (id: string, file: string) => {
     return dispatch(deleteFileAsyncAction({ id, file }));
   };
 

@@ -42,13 +42,7 @@ const TaskCreatorScreen = () => {
 
   return (
     <SafeAreaView style={styles.wrapper}>
-      <AppHeader
-        label="Add new task"
-        goBackAllowed={true}
-        onDelete={() => {
-          console.log('Deleted.');
-        }}
-      />
+      <AppHeader label="Add new task" goBackAllowed={true} />
       <Formik
         initialValues={{ title: '', description: '' }}
         validationSchema={validationSchemaEditTask}
