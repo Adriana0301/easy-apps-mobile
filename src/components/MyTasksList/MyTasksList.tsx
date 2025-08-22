@@ -19,9 +19,9 @@ const MyTasksList = () => {
         <FlatList
           data={tasks}
           renderItem={({ item }) => (
-            <Item id={item.id} title={item.title} done={item.done} />
+            <Item _id={item._id} title={item.title} done={item.done} />
           )}
-          keyExtractor={item => item.id.toString()}
+          keyExtractor={(item, index) => `${item._id}${index}`}
           style={styles.list}
           initialNumToRender={1}
           showsVerticalScrollIndicator={false}

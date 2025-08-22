@@ -8,7 +8,7 @@ import styles from './CheckItem.styles';
 type CheckProps = {
   title?: string;
   isDone?: boolean;
-  id?: number;
+  id?: string;
   done: boolean;
   label?: string;
   onChange?: (isDone: boolean) => void;

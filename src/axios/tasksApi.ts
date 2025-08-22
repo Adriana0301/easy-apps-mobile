@@ -4,7 +4,7 @@ export const tasksRequest = async () => {
   return axiosInstance.get('/tasks');
 };
 
-export const taskByIdRequest = async (id: number) => {
+export const taskByIdRequest = async (id: string) => {
   return axiosInstance.get(`/tasks/${id}`);
 };
 
@@ -37,11 +37,11 @@ export const tasksCreateRequest = async (
   });
 };
 
-export const taskDeleteRequest = async (id: number) => {
+export const taskDeleteRequest = async (id: string) => {
   return axiosInstance.delete(`/tasks/${id}`);
 };
 
-export const changeTaskStatusRequest = (id: number, done: boolean) => {
+export const changeTaskStatusRequest = (id: string, done: boolean) => {
   const formData = new FormData();
 
   formData.append('done', String(done));
@@ -63,7 +63,7 @@ export const allTasksRequest = async (page: number, tasksPerPage: number) => {
 };
 
 export const editTaskInfo = (
-  id: number,
+  id: string,
   done: boolean,
   title: string,
   description?: string,
@@ -98,6 +98,6 @@ export const editTaskInfo = (
   });
 };
 
-export const deleteFileRequest = (id: number, url: string) => {
+export const deleteFileRequest = (id: string, url: string) => {
   return axiosInstance.put(`/tasks/${id}/files`, { url });
 };
