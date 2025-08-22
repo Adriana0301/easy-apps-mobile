@@ -61,3 +61,43 @@ export const allTasksRequest = async (page: number, tasksPerPage: number) => {
     },
   });
 };
+
+export const editTaskInfo = (
+  id: number,
+  done: boolean,
+  title: string,
+  description?: string,
+  files?: string[],
+) => {
+  const formData = new FormData();
+
+  if (title) {
+    formData.append('title', title);
+  }
+  if (description) {
+    formData.append('description', description);
+  }
+  if (files?.length) {
+    for (let i = 0; i < files.length; i++) {
+      const file = {
+        uri: files[i],
+        type: 'image/jpeg',
+        name: 'avatar.jpg',
+      };
+      formData.append('files', file);
+    }
+  }
+  if (done !== undefined) {
+    formData.append('done', done);
+  }
+
+  return axiosInstance.put(`/tasks/${id}`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+};
+
+export const deleteFileRequest = (id: number, url: string) => {
+  return axiosInstance.put(`/tasks/${id}/files`, { url });
+};

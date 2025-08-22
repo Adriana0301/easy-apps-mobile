@@ -4,7 +4,9 @@ import {
   allTasksAsyncAction,
   changeTaskStatusAsyncAction,
   createTaskAsyncAction,
+  deleteFileAsyncAction,
   deleteTaskAsyncAction,
+  editTaskAsyncAction,
   getTaskByIdAsyncAction,
   getTasksAsyncAction,
 } from '../actions/tasksActions';
@@ -106,6 +108,32 @@ const tasksSlice = createSlice({
         state.taskTotalCount = action.payload.taskTotalCount;
         state.page = action.meta.arg.page;
         state.tasksPerPage = action.meta.arg.tasksPerPage;
+      })
+      .addCase(editTaskAsyncAction.pending, state => {
+        state.isLoading = true;
+        state.isError = null;
+      })
+      .addCase(editTaskAsyncAction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.payload as string;
+      })
+      .addCase(editTaskAsyncAction.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.currentTask = action.payload ?? null;
+        state.isError = null;
+      })
+      .addCase(deleteFileAsyncAction.pending, state => {
+        state.isLoading = true;
+        state.isError = null;
+      })
+      .addCase(deleteFileAsyncAction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.payload as string;
+      })
+      .addCase(deleteFileAsyncAction.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.currentTask = action.payload ?? null;
+        state.isError = null;
       });
   },
 });

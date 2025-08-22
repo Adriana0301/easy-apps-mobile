@@ -1,9 +1,12 @@
+import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { TaskState } from '../interfaces/tasks/tasks';
 import {
   allTasksAsyncAction,
   changeTaskStatusAsyncAction,
   createTaskAsyncAction,
+  deleteFileAsyncAction,
+  editTaskAsyncAction,
   getTaskByIdAsyncAction,
   getTasksAsyncAction,
 } from '../redux/actions/tasksActions';
@@ -59,8 +62,27 @@ const useTasks = () => {
   const changeTaskStatus = (id: number, done: boolean) => {
     dispatch(changeTaskStatusAsyncAction({ id, done }));
   };
-  const getCommonTasks = (page: number, tasksPerPage: number) => {
-    dispatch(allTasksAsyncAction({ page, tasksPerPage }));
+  const getCommonTasks = useCallback(
+    (page: number, tasksPerPage: number) => {
+      dispatch(allTasksAsyncAction({ page, tasksPerPage }));
+    },
+    [dispatch],
+  );
+
+  const editTask = (
+    id: number,
+    done: boolean,
+    title: string,
+    description?: string,
+    files?: string[],
+  ) => {
+    return dispatch(
+      editTaskAsyncAction({ id, title, description, files, done }),
+    );
+  };
+
+  const deleteFile = (id: number, file: string) => {
+    return dispatch(deleteFileAsyncAction({ id, file }));
   };
 
   return {
@@ -78,6 +100,8 @@ const useTasks = () => {
     getTaskById,
     changeTaskStatus,
     getCommonTasks,
+    editTask,
+    deleteFile,
   };
 };
 
