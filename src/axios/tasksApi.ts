@@ -37,6 +37,27 @@ export const tasksCreateRequest = async (
   });
 };
 
-export const taskDeleteRequest = (id: number) => {
+export const taskDeleteRequest = async (id: number) => {
   return axiosInstance.delete(`/tasks/${id}`);
+};
+
+export const changeTaskStatusRequest = (id: number, done: boolean) => {
+  const formData = new FormData();
+
+  formData.append('done', String(done));
+
+  return axiosInstance.patch(`/tasks/${id}`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+};
+
+export const allTasksRequest = async (page: number, tasksPerPage: number) => {
+  return axiosInstance.get('/tasks/all', {
+    params: {
+      page,
+      tasksPerPage,
+    },
+  });
 };

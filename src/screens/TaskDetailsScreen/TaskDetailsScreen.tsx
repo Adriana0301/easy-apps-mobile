@@ -64,7 +64,7 @@ const TasksDetailsScreen = () => {
             {currentTask?.description && (
               <Text style={styles.description}>{currentTask?.description}</Text>
             )}
-            <ProgressStatus done={currentTask?.done} />
+            <ProgressStatus done={Boolean(currentTask?.done)} />
             <FlatList
               data={filesArray}
               keyExtractor={(item, index) => index.toString()}

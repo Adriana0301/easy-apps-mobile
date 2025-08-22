@@ -1,29 +1,32 @@
-import { useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import CheckActiveIcon from '../../assets/icons/CheckActiveIcon';
 import CheckIcon from '../../assets/icons/CheckIcon';
+import useTasks from '../../hooks/useTasks';
 import styles from './CheckItem.styles';
 
 type CheckProps = {
   title: string;
+  id: number;
+  done: boolean;
 };
-const CheckItem = ({ title }: CheckProps) => {
-  const [done, setDone] = useState(false); // when we have request for update tasks,
-  // we will change 'done' in backend
+const CheckItem = ({ title, id, done }: CheckProps) => {
+  const { changeTaskStatus } = useTasks();
   const toggleDone = () => {
-    setDone(prev => !prev);
+    changeTaskStatus(id, !done);
   };
   return (
     <TouchableOpacity onPress={toggleDone}>
       {done ? (
         <View style={styles.container}>
           <CheckActiveIcon />
-          <Text style={styles.changedText}>{title}</Text>
+          <Text style={styles.changedText}>
+            {title.slice(0, 30) + (title.length > 30 ? '...' : '')}
+          </Text>
         </View>
       ) : (
         <View style={styles.container}>
           <CheckIcon />
-          <Text>{title}</Text>
+          <Text> {title.slice(0, 30) + (title.length > 30 ? '...' : '')}</Text>
         </View>
       )}
     </TouchableOpacity>

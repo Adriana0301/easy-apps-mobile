@@ -1,10 +1,14 @@
 import { Text, View } from 'react-native';
 import styles from './ProgressStatus.styles';
 
-const ProgressStatus = (done: boolean) => {
+type ProgressStatusProps = {
+  done: boolean;
+};
+
+const ProgressStatus = ({ done }: ProgressStatusProps) => {
   return (
     <View>
-      {!done ? (
+      {done ? (
         <View style={styles.doneContainer}>
           <Text style={styles.textDone}>Done</Text>
         </View>
