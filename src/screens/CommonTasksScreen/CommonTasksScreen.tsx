@@ -12,7 +12,14 @@ const CommonTasksScreen = () => {
     usePagination();
 
   if (loading && data.length === 0) {
-    return <ActiveIndicator />;
+    return (
+      <View>
+        <View style={styles.header}>
+          <AppHeader label="Common Tasks" />
+        </View>
+        <ActiveIndicator />
+      </View>
+    );
   }
   if (error) {
     return (
