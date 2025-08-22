@@ -54,6 +54,12 @@ const tasksSlice = createSlice({
         state.isLoading = false;
         state.isError = action.payload as string;
       })
+      .addCase(createTaskAsyncAction.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.tasks.push(action.payload);
+        state.taskTotalCount += 1;
+        state.isError = null;
+      })
       .addCase(deleteTaskAsyncAction.pending, state => {
         state.isLoading = true;
         state.isError = null;

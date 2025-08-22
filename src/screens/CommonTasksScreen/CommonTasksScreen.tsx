@@ -39,7 +39,7 @@ const CommonTasksScreen = () => {
           data={data}
           showsVerticalScrollIndicator={false}
           renderItem={({ item }) => <CommonTasksItem title={item.title} />}
-          keyExtractor={(item, index) => `${item.id.toString()}-${index}`}
+          keyExtractor={(item, index) => `${item._id}-${index}`}
           onEndReached={() => hasMore && handleLoadMore()}
           onEndReachedThreshold={0.5}
           refreshing={refreshing}

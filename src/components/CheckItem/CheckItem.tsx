@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import CheckActiveIcon from '../../assets/icons/CheckActiveIcon';
 import CheckIcon from '../../assets/icons/CheckIcon';
@@ -7,7 +6,6 @@ import styles from './CheckItem.styles';
 
 type CheckProps = {
   title?: string;
-  isDone?: boolean;
   id?: string;
   done: boolean;
   label?: string;
@@ -15,11 +13,9 @@ type CheckProps = {
 };
 const CheckItem = ({ title, id, done, label, onChange }: CheckProps) => {
   const { changeTaskStatus } = useTasks();
-  const [isDone, setIsDone] = useState(done);
 
   const toggleDone = () => {
     id && changeTaskStatus(id, !done);
-    setIsDone(!done);
     onChange?.(!done);
   };
   return (
