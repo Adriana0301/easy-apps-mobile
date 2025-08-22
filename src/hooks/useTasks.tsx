@@ -24,6 +24,12 @@ const useTasks = () => {
   const commonTasks = useSelector<TRootState, TaskState[]>(
     (state: TRootState) => state.tasks.commonTasks,
   );
+  const page = useSelector<TRootState, number>(
+    (state: TRootState) => state.tasks.page,
+  );
+  const tasksPerPage = useSelector<TRootState, number>(
+    (state: TRootState) => state.tasks.tasksPerPage,
+  );
   const totalCommonTasks = useSelector<TRootState, number>(
     (state: TRootState) => state.tasks.taskTotalCount,
   );
@@ -62,6 +68,8 @@ const useTasks = () => {
     tasks,
     currentTask,
     commonTasks,
+    page,
+    tasksPerPage,
     totalCommonTasks,
     total,
     loading,

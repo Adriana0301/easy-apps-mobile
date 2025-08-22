@@ -17,12 +17,18 @@ const initialState: TasksState = {
   currentTask: null,
   commonTasks: [],
   taskTotalCount: 0,
+  page: 1,
+  tasksPerPage: 10,
 };
 
 const tasksSlice = createSlice({
   name: 'tasks',
   initialState,
-  reducers: {},
+  reducers: {
+    setPage: (state, action) => {
+      state.page = action.payload;
+    },
+  },
   extraReducers: builder => {
     builder
       .addCase(getTasksAsyncAction.pending, state => {
@@ -98,7 +104,11 @@ const tasksSlice = createSlice({
           state.commonTasks = [...state.commonTasks, ...action.payload.tasks];
         }
         state.taskTotalCount = action.payload.taskTotalCount;
+        state.page = action.meta.arg.page;
+        state.tasksPerPage = action.meta.arg.tasksPerPage;
       });
   },
 });
+
+export const { setPage } = tasksSlice.actions;
 export default tasksSlice.reducer;

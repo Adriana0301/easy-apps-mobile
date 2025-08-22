@@ -20,6 +20,8 @@ export type TasksState = {
   currentTask: TaskState | null;
   commonTasks: TaskState[];
   taskTotalCount: number;
+  page: number;
+  tasksPerPage: number;
 };
 
 export type StatusPayload = {

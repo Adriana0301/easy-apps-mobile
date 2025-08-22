@@ -66,12 +66,14 @@ export const createTaskAsyncAction = createAsyncThunk(
   '/tasks',
   async (
     { title, description, files, onSuccess }: TasksPayload,
-    { rejectWithValue, dispatch },
+    { rejectWithValue, dispatch, getState },
   ) => {
     try {
       await tasksCreateRequest(title, description, files);
       dispatch(getTasksAsyncAction());
-      dispatch(allTasksAsyncAction({ page: 1, tasksPerPage: 10 }));
+      const state: any = getState();
+      const { page, tasksPerPage } = state.tasks;
+      dispatch(allTasksAsyncAction({ page, tasksPerPage }));
       if (onSuccess) {
         onSuccess();
       }

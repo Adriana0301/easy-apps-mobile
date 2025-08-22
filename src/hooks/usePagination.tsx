@@ -1,14 +1,21 @@
 import { useCallback, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { setPage } from '../redux/tasks/tasksSlice';
 import useTasks from './useTasks';
 
-const initialData = { page: 1, tasksPerPage: 10 };
-
 const usePagination = () => {
-  const { getCommonTasks, commonTasks, loading, totalCommonTasks } = useTasks();
-  const [page, setPage] = useState(initialData.page);
+  const dispatch = useDispatch();
+  const {
+    getCommonTasks,
+    commonTasks,
+    loading,
+    totalCommonTasks,
+    page,
+    tasksPerPage,
+  } = useTasks();
+
   const [refreshing, setRefreshing] = useState(false);
 
-  const tasksPerPage = initialData.tasksPerPage;
   const hasMore = commonTasks.length < totalCommonTasks;
 
   useEffect(() => {
@@ -17,14 +24,14 @@ const usePagination = () => {
 
   const handleRefresh = useCallback(() => {
     setRefreshing(true);
-    setPage(1);
+    dispatch(setPage(1));
     getCommonTasks(1, tasksPerPage);
     setRefreshing(false);
   }, [getCommonTasks, tasksPerPage]);
 
-  const handleLoadMore = useCallback(() => {
+  const handleLoadMore = useCallback(async () => {
     if (!loading && hasMore) {
-      setPage(prev => prev + 1);
+      dispatch(setPage(page + 1));
     }
   }, [loading, hasMore]);
 
