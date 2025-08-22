@@ -2,6 +2,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { TaskState } from '../interfaces/tasks/tasks';
 import {
   createTaskAsyncAction,
+  deleteFileAsyncAction,
+  editTaskAsyncAction,
   getTaskByIdAsyncAction,
   getTasksAsyncAction,
 } from '../redux/actions/tasksActions';
@@ -42,6 +44,22 @@ const useTasks = () => {
     dispatch(createTaskAsyncAction({ title, description, files, onSuccess }));
   };
 
+  const editTask = (
+    id: number,
+    done: boolean,
+    title: string,
+    description?: string,
+    files?: string[],
+  ) => {
+    return dispatch(
+      editTaskAsyncAction({ id, title, description, files, done }),
+    );
+  };
+
+  const deleteFile = (id: number, file: string) => {
+    return dispatch(deleteFileAsyncAction({ id, file }));
+  };
+
   return {
     error,
     tasks,
@@ -51,6 +69,8 @@ const useTasks = () => {
     getAllTasks,
     createTask,
     getTaskById,
+    editTask,
+    deleteFile,
   };
 };
 

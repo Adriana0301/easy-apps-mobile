@@ -2,7 +2,9 @@ import { createSlice } from '@reduxjs/toolkit';
 import { TasksState } from '../../interfaces/tasks/tasks';
 import {
   createTaskAsyncAction,
+  deleteFileAsyncAction,
   deleteTaskAsyncAction,
+  editTaskAsyncAction,
   getTaskByIdAsyncAction,
   getTasksAsyncAction,
 } from '../actions/tasksActions';
@@ -70,7 +72,33 @@ const tasksSlice = createSlice({
         state.currentTask = action.payload;
         state.isError = null;
       })
-      .addCase(logout, () => initialState);
+      .addCase(logout, () => initialState)
+      .addCase(editTaskAsyncAction.pending, state => {
+        state.isLoading = true;
+        state.isError = null;
+      })
+      .addCase(editTaskAsyncAction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.payload as string;
+      })
+      .addCase(editTaskAsyncAction.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.currentTask = action.payload ?? null;
+        state.isError = null;
+      })
+      .addCase(deleteFileAsyncAction.pending, state => {
+        state.isLoading = true;
+        state.isError = null;
+      })
+      .addCase(deleteFileAsyncAction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.payload as string;
+      })
+      .addCase(deleteFileAsyncAction.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.currentTask = action.payload ?? null;
+        state.isError = null;
+      });
   },
 });
 export default tasksSlice.reducer;

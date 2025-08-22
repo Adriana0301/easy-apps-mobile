@@ -2,6 +2,7 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { Formik } from 'formik';
 import React, { useEffect } from 'react';
 import { Alert, SafeAreaView, View } from 'react-native';
+import { Toast } from 'react-native-toast-message/lib/src/Toast';
 import { useDispatch } from 'react-redux';
 import ActiveIndicator from '../../components/ActiveIndicator/ActiveIndicator';
 import AppButton from '../../components/AppButton/AppButton';
@@ -13,29 +14,37 @@ import TextError from '../../components/TextError/TextError';
 import useTasks from '../../hooks/useTasks';
 import { ERouteNames } from '../../interfaces/navigation/routeNames';
 import { AppStackParamList } from '../../interfaces/navigation/routeParams';
-import { deleteTaskAsyncAction } from '../../redux/actions/tasksActions';
+import {
+  deleteFileAsyncAction,
+  deleteTaskAsyncAction,
+  editTaskAsyncAction,
+} from '../../redux/actions/tasksActions';
 import { TAppDispatch } from '../../redux/store';
 import validationSchemaAddTasks from '../../validation/validationSchemaAddTask';
 import styles from './TaskEditorScreen.styles';
 
 type TaskEditRouteProp = RouteProp<AppStackParamList, ERouteNames.TASK_EDITOR>;
 
-const TaskCreatorScreen = () => {
+const TaskEditorScreen = () => {
   const navigation = useNavigation();
   const [attachments, setAttachments] = React.useState<string[]>([]);
-  const { loading, getTaskById, currentTask } = useTasks();
+  const { loading, getTaskById, currentTask, editTask, deleteFile } =
+    useTasks();
   const { taskId } = useRoute<TaskEditRouteProp>().params;
   const dispatch = useDispatch<TAppDispatch>();
-
-  const filesArray = currentTask?.files
-    ? JSON.parse(currentTask.files.toString())
-    : [];
+  const [initialFiles, setInitialFiles] = React.useState<string[]>([]);
 
   useEffect(() => {
     getTaskById(taskId);
-    // should better make it async ?
-    setAttachments(filesArray);
   }, [taskId]);
+
+  useEffect(() => {
+    if (currentTask?.files) {
+      const parsed = JSON.parse(currentTask.files.toString());
+      setAttachments(parsed);
+      setInitialFiles(parsed);
+    }
+  }, [currentTask]);
 
   const addAttachment = React.useCallback(
     (newAttachment: string) => {
@@ -60,6 +69,13 @@ const TaskCreatorScreen = () => {
       navigation.goBack();
     }
   }, [navigation]);
+
+  const showSuccessToast = () => {
+    Toast.show({
+      type: 'success',
+      text1: 'Task info changed successfully',
+    });
+  };
 
   const deleteTaskAndGoBack = () => {
     dispatch(deleteTaskAsyncAction(taskId));
@@ -92,24 +108,73 @@ const TaskCreatorScreen = () => {
             description: currentTask?.description || '',
             status: currentTask?.done || false,
           }}
+          enableReinitialize
           validationSchema={validationSchemaAddTasks}
-          onSubmit={value => {
-            // createTask(
-            //   value.title,
-            //   value?.description,
-            //   attachments,
-            //   goToMyTasksScreen,
-            // );
+          onSubmit={async values => {
+            const deletedFiles = initialFiles.filter(
+              (file: string) => !attachments.includes(file),
+            );
+            console.log(deletedFiles);
 
-            console.log('edited: ', value);
+            const isChanged =
+              currentTask?.title !== values.title ||
+              (currentTask?.description ?? '').trim() !==
+                values.description.trim() ||
+              currentTask?.done !== values.status ||
+              JSON.stringify(initialFiles) !== JSON.stringify(attachments);
+
+            if (!isChanged) {
+              Alert.alert('There is no change to update');
+              return;
+            }
+
+            if (deletedFiles.length > 0) {
+              for (const file of deletedFiles) {
+                const result = await deleteFile(taskId, file);
+                if (!deleteFileAsyncAction.rejected.match(result)) {
+                  setAttachments(prev => prev.filter(f => f !== file));
+                  showSuccessToast();
+                } else {
+                  Alert.alert('Failed to delete some files.');
+                }
+              }
+            }
+
+            const descriptionToSend =
+              (currentTask?.description ?? '').trim() !==
+              values.description.trim()
+                ? values.description.trim()
+                : undefined;
+
+            if (
+              currentTask?.title !== values.title ||
+              (currentTask?.description ?? '').trim() !==
+                values.description.trim() ||
+              currentTask?.done !== values.status ||
+              (JSON.stringify(initialFiles) !== JSON.stringify(attachments) &&
+                deletedFiles.length === 0)
+            ) {
+              const result = await editTask(
+                taskId,
+                values.status,
+                values.title,
+                descriptionToSend,
+                attachments,
+              );
+              if (!editTaskAsyncAction.rejected.match(result)) {
+                goToPreviousScreen();
+              } else {
+                Alert.alert('Failed to update task.');
+              }
+            }
           }}
         >
-          {({ handleSubmit, setFieldValue, errors }) => (
+          {({ handleSubmit, setFieldValue, values, errors }) => (
             <View style={styles.container}>
               <View style={styles.inputs}>
                 <AppInput
                   label="Task title"
-                  value={currentTask?.title}
+                  value={values.title}
                   onChangeText={text => setFieldValue('title', text)}
                   theme="dark"
                 />
@@ -117,13 +182,13 @@ const TaskCreatorScreen = () => {
                 <AppInput
                   theme="dark"
                   label="Task description"
-                  value={currentTask?.description}
+                  value={values.description}
                   onChangeText={text => setFieldValue('description', text)}
                 />
                 {errors.description && <TextError error={errors.description} />}
                 <View style={styles.checkboxWrapper}>
                   <CheckItem
-                    label="Done "
+                    label="Done"
                     onChange={isDone => setFieldValue('status', isDone)}
                   />
                 </View>
@@ -144,7 +209,8 @@ const TaskCreatorScreen = () => {
           )}
         </Formik>
       )}
+      <Toast />
     </SafeAreaView>
   );
 };
-export default TaskCreatorScreen;
+export default TaskEditorScreen;
