@@ -11,6 +11,9 @@ const CommonTasksScreen = () => {
   const { data, refreshing, handleRefresh, handleLoadMore, hasMore } =
     usePagination();
 
+  if (loading && data.length === 0) {
+    return <ActiveIndicator />;
+  }
   if (error) {
     return (
       <View style={styles.wrapper}>
@@ -24,30 +27,22 @@ const CommonTasksScreen = () => {
       <View style={styles.header}>
         <AppHeader label="Common Tasks" />
       </View>
-      {loading && data.length === 0 ? (
-        <ActiveIndicator />
+      {data.length ? (
+        <FlatList
+          data={data}
+          showsVerticalScrollIndicator={false}
+          renderItem={({ item }) => <CommonTasksItem title={item.title} />}
+          keyExtractor={(item, index) => `${item.id.toString()}-${index}`}
+          onEndReached={() => hasMore && handleLoadMore()}
+          onEndReachedThreshold={0.5}
+          refreshing={refreshing}
+          onRefresh={handleRefresh}
+          ListFooterComponent={loading && hasMore ? <ActiveIndicator /> : null}
+          style={styles.flatList}
+        />
       ) : (
-        <View>
-          {data.length ? (
-            <FlatList
-              data={data}
-              showsVerticalScrollIndicator={false}
-              renderItem={({ item }) => <CommonTasksItem title={item.title} />}
-              keyExtractor={(item, index) => `${item.id.toString()}-${index}`}
-              onEndReached={() => hasMore && handleLoadMore()}
-              onEndReachedThreshold={0.5}
-              refreshing={refreshing}
-              onRefresh={handleRefresh}
-              ListFooterComponent={
-                loading && hasMore ? <ActiveIndicator /> : null
-              }
-              style={styles.flatList}
-            />
-          ) : (
-            <View style={styles.wrapper}>
-              <Text style={styles.text}>No tasks yet</Text>
-            </View>
-          )}
+        <View style={styles.wrapper}>
+          <Text style={styles.text}>No tasks yet</Text>
         </View>
       )}
     </View>
