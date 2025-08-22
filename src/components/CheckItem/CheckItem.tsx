@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import CheckActiveIcon from '../../assets/icons/CheckActiveIcon';
 import CheckIcon from '../../assets/icons/CheckIcon';
@@ -6,16 +7,19 @@ import styles from './CheckItem.styles';
 
 type CheckProps = {
   title?: string;
+  isDone?: boolean;
   id?: number;
-  done?: boolean;
+  done: boolean;
   label?: string;
   onChange?: (isDone: boolean) => void;
 };
 const CheckItem = ({ title, id, done, label, onChange }: CheckProps) => {
   const { changeTaskStatus } = useTasks();
+  const [isDone, setIsDone] = useState(done);
 
   const toggleDone = () => {
-    changeTaskStatus(id, !done);
+    id && changeTaskStatus(id, !done);
+    setIsDone(!done);
     onChange?.(!done);
   };
   return (
@@ -29,7 +33,6 @@ const CheckItem = ({ title, id, done, label, onChange }: CheckProps) => {
               {title.slice(0, 30) + (title.length > 30 ? '...' : '')}
             </Text>
           )}
-          {title && <Text style={styles.changedText}>{title}</Text>}
         </View>
       ) : (
         <View style={styles.container}>
@@ -41,7 +44,6 @@ const CheckItem = ({ title, id, done, label, onChange }: CheckProps) => {
               {title.slice(0, 30) + (title.length > 30 ? '...' : '')}
             </Text>
           )}
-          {title && <Text>{title}</Text>}
         </View>
       )}
     </TouchableOpacity>

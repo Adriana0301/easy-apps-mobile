@@ -188,6 +188,7 @@ const TaskEditorScreen = () => {
                 {errors.description && <TextError error={errors.description} />}
                 <View style={styles.checkboxWrapper}>
                   <CheckItem
+                    done={values.status}
                     label="Done"
                     onChange={isDone => setFieldValue('status', isDone)}
                   />

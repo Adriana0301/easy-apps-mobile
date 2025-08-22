@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { TaskState } from '../interfaces/tasks/tasks';
 import {
@@ -61,9 +62,12 @@ const useTasks = () => {
   const changeTaskStatus = (id: number, done: boolean) => {
     dispatch(changeTaskStatusAsyncAction({ id, done }));
   };
-  const getCommonTasks = (page: number, tasksPerPage: number) => {
-    dispatch(allTasksAsyncAction({ page, tasksPerPage }));
-  };
+  const getCommonTasks = useCallback(
+    (page: number, tasksPerPage: number) => {
+      dispatch(allTasksAsyncAction({ page, tasksPerPage }));
+    },
+    [dispatch],
+  );
 
   const editTask = (
     id: number,
