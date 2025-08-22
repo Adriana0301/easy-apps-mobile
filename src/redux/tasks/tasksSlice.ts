@@ -1,6 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { TasksState } from '../../interfaces/tasks/tasks';
 import {
+  allTasksAsyncAction,
+  changeTaskStatusAsyncAction,
   createTaskAsyncAction,
   deleteFileAsyncAction,
   deleteTaskAsyncAction,
@@ -15,12 +17,20 @@ const initialState: TasksState = {
   isError: null,
   tasks: [],
   currentTask: null,
+  commonTasks: [],
+  taskTotalCount: 0,
+  page: 1,
+  tasksPerPage: 10,
 };
 
 const tasksSlice = createSlice({
   name: 'tasks',
   initialState,
-  reducers: {},
+  reducers: {
+    setPage: (state, action) => {
+      state.page = action.payload;
+    },
+  },
   extraReducers: builder => {
     builder
       .addCase(getTasksAsyncAction.pending, state => {
@@ -52,10 +62,7 @@ const tasksSlice = createSlice({
         state.isLoading = false;
         state.isError = action.payload as string;
       })
-      .addCase(deleteTaskAsyncAction.fulfilled, (state, action) => {
-        state.tasks = state.tasks.filter(task => {
-          return task.id !== action.payload.tasks;
-        });
+      .addCase(deleteTaskAsyncAction.fulfilled, state => {
         state.isLoading = false;
         state.isError = null;
       })
@@ -73,6 +80,35 @@ const tasksSlice = createSlice({
         state.isError = null;
       })
       .addCase(logout, () => initialState)
+      .addCase(changeTaskStatusAsyncAction.pending, state => {
+        state.isLoading = true;
+        state.isError = null;
+      })
+      .addCase(changeTaskStatusAsyncAction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.payload as string;
+      })
+      .addCase(allTasksAsyncAction.pending, state => {
+        state.isLoading = true;
+        state.isError = null;
+      })
+      .addCase(allTasksAsyncAction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.payload as string;
+      })
+      .addCase(allTasksAsyncAction.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = null;
+
+        if (action.meta.arg.page === 1) {
+          state.commonTasks = action.payload.tasks;
+        } else {
+          state.commonTasks = [...state.commonTasks, ...action.payload.tasks];
+        }
+        state.taskTotalCount = action.payload.taskTotalCount;
+        state.page = action.meta.arg.page;
+        state.tasksPerPage = action.meta.arg.tasksPerPage;
+      })
       .addCase(editTaskAsyncAction.pending, state => {
         state.isLoading = true;
         state.isError = null;
@@ -101,4 +137,6 @@ const tasksSlice = createSlice({
       });
   },
 });
+
+export const { setPage } = tasksSlice.actions;
 export default tasksSlice.reducer;

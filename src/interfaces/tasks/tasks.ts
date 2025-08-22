@@ -18,4 +18,26 @@ export type TasksState = {
   isError: string | null;
   tasks: TaskState[];
   currentTask: TaskState | null;
+  commonTasks: TaskState[];
+  taskTotalCount: number;
+  page: number;
+  tasksPerPage: number;
+};
+
+export type StatusPayload = {
+  id: number;
+  done: boolean;
+};
+
+export type AllTasksParams = {
+  page: number;
+  tasksPerPage: number;
+};
+
+export type AllTasksState = {
+  isLoading: boolean;
+  isError: string | null;
+  tasks: TaskState[];
+  page: number;
+  tasksPerPage: number;
 };
