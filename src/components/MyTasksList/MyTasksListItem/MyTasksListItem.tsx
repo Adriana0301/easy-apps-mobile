@@ -11,9 +11,9 @@ import CheckItem from '../../CheckItem/CheckItem';
 import IconButton from '../../IconButton/IconButton';
 import styles from './MyTasksListItem.styles';
 
-type ItemProps = { id: number; title: string; done: boolean };
+type ItemProps = { _id: string; title: string; done: boolean };
 
-const Item = ({ id, title, done }: ItemProps) => {
+const Item = ({ _id, title, done }: ItemProps) => {
   const navigation = useNavigation<AppNavigationParams>();
   const dispatch = useDispatch<TAppDispatch>();
 
@@ -22,7 +22,7 @@ const Item = ({ id, title, done }: ItemProps) => {
       { text: 'Cancel', style: 'cancel' },
       {
         text: 'Yes',
-        onPress: () => dispatch(deleteTaskAsyncAction(id)),
+        onPress: () => dispatch(deleteTaskAsyncAction(_id)),
       },
     ]);
 
@@ -30,16 +30,16 @@ const Item = ({ id, title, done }: ItemProps) => {
     <Pressable
       style={styles.item}
       onPress={() =>
-        navigation.navigate(ERouteNames.TASK_DETAILS, { taskId: id })
+        navigation.navigate(ERouteNames.TASK_DETAILS, { taskId: _id })
       }
     >
-      <CheckItem title={title} id={id} done={done} />
+      <CheckItem title={title} id={_id} done={done} />
       <View style={styles.iconsWrapper}>
         <IconButton Icon={BinIcon} onPress={deleteTaskButton} />
         <IconButton
           Icon={ChangeIcon}
           onPress={() =>
-            navigation.navigate(ERouteNames.TASK_EDITOR, { taskId: id })
+            navigation.navigate(ERouteNames.TASK_EDITOR, { taskId: _id })
           }
         />
       </View>

@@ -42,9 +42,9 @@ export const getTasksAsyncAction = createAsyncThunk(
 
 export const getTaskByIdAsyncAction = createAsyncThunk(
   '/tasks/:id',
-  async (id: number, { rejectWithValue }) => {
+  async (_id: string, { rejectWithValue }) => {
     try {
-      const { data } = await taskByIdRequest(id);
+      const { data } = await taskByIdRequest(_id);
 
       return data;
     } catch (error) {
@@ -68,17 +68,15 @@ export const createTaskAsyncAction = createAsyncThunk(
   '/tasks',
   async (
     { title, description, files, onSuccess }: TasksPayload,
-    { rejectWithValue, dispatch, getState },
+    { rejectWithValue, dispatch },
   ) => {
     try {
-      await tasksCreateRequest(title, description, files);
+      const { data } = await tasksCreateRequest(title, description, files);
       dispatch(getTasksAsyncAction());
-      const state: any = getState();
-      const { page, tasksPerPage } = state.tasks;
-      dispatch(allTasksAsyncAction({ page, tasksPerPage }));
       if (onSuccess) {
         onSuccess();
       }
+      return data;
     } catch (error) {
       let errorMessage = 'An unexpected error occurred';
       if (isAxiosError(error)) {
@@ -100,9 +98,9 @@ export const createTaskAsyncAction = createAsyncThunk(
 
 export const deleteTaskAsyncAction = createAsyncThunk(
   '/task/:id',
-  async (id: number, { rejectWithValue, dispatch }) => {
+  async (_id: string, { rejectWithValue, dispatch }) => {
     try {
-      await taskDeleteRequest(id);
+      await taskDeleteRequest(_id);
       dispatch(getTasksAsyncAction());
     } catch (error) {
       let errorMessage = 'An unexpected error occurred';
@@ -123,9 +121,9 @@ export const deleteTaskAsyncAction = createAsyncThunk(
 
 export const changeTaskStatusAsyncAction = createAsyncThunk(
   'task/:id',
-  async ({ id, done }: StatusPayload, { rejectWithValue, dispatch }) => {
+  async ({ _id, done }: StatusPayload, { rejectWithValue, dispatch }) => {
     try {
-      await changeTaskStatusRequest(Number(id), Boolean(done));
+      await changeTaskStatusRequest(String(_id), Boolean(done));
       dispatch(getTasksAsyncAction());
     } catch (error) {
       let errorMessage = 'An unexpected error occurred';
@@ -149,6 +147,7 @@ export const allTasksAsyncAction = createAsyncThunk(
   async ({ page, tasksPerPage }: AllTasksParams, { rejectWithValue }) => {
     try {
       const { data } = await allTasksRequest(page, tasksPerPage);
+      console.log('render', data);
       return data;
     } catch (error) {
       let errorMessage = 'An unexpected error occurred';
@@ -168,7 +167,7 @@ export const allTasksAsyncAction = createAsyncThunk(
 );
 
 export const editTaskAsyncAction = createAsyncThunk(
-  'task/updateTaskInfor',
+  'task/updateTaskInfo',
   async (
     {
       id,
@@ -177,7 +176,7 @@ export const editTaskAsyncAction = createAsyncThunk(
       description,
       files,
     }: {
-      id: number;
+      id: string;
       done: boolean;
       title: string;
       description?: string;
@@ -208,7 +207,7 @@ export const editTaskAsyncAction = createAsyncThunk(
 
 export const deleteFileAsyncAction = createAsyncThunk(
   'task/deleteFile',
-  async ({ id, file }: { id: number; file: string }, { rejectWithValue }) => {
+  async ({ id, file }: { id: string; file: string }, { rejectWithValue }) => {
     try {
       const response = await deleteFileRequest(id, file);
       return response.data;

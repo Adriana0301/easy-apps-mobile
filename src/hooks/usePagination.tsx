@@ -19,19 +19,21 @@ const usePagination = () => {
   const hasMore = commonTasks.length < totalCommonTasks;
 
   useEffect(() => {
-    getCommonTasks(page, tasksPerPage);
-  }, [page, tasksPerPage]);
+    if (totalCommonTasks > 0 && page === 1) {
+      getCommonTasks(page, tasksPerPage);
+    }
+  }, [totalCommonTasks]);
 
-  const handleRefresh = useCallback(() => {
+  const handleRefresh = useCallback(async () => {
     setRefreshing(true);
     dispatch(setPage(1));
-    getCommonTasks(1, tasksPerPage);
+    await getCommonTasks(1, tasksPerPage);
     setRefreshing(false);
   }, [getCommonTasks, tasksPerPage]);
 
   const handleLoadMore = useCallback(async () => {
     if (!loading && hasMore) {
-      dispatch(setPage(page + 1));
+      await getCommonTasks(page + 1, tasksPerPage);
     }
   }, [loading, hasMore]);
 

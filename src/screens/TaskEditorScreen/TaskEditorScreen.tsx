@@ -70,13 +70,6 @@ const TaskEditorScreen = () => {
     }
   }, [navigation]);
 
-  const showSuccessToast = () => {
-    Toast.show({
-      type: 'success',
-      text1: 'Task info changed successfully',
-    });
-  };
-
   const deleteTaskAndGoBack = () => {
     dispatch(deleteTaskAsyncAction(taskId));
     if (navigation.canGoBack()) {
@@ -133,7 +126,6 @@ const TaskEditorScreen = () => {
                 const result = await deleteFile(taskId, file);
                 if (!deleteFileAsyncAction.rejected.match(result)) {
                   setAttachments(prev => prev.filter(f => f !== file));
-                  showSuccessToast();
                 } else {
                   Alert.alert('Failed to delete some files.');
                 }

@@ -7,19 +7,16 @@ import styles from './CheckItem.styles';
 
 type CheckProps = {
   title?: string;
-  isDone?: boolean;
-  id?: number;
+  id?: string;
   done: boolean;
   label?: string;
   onChange?: (isDone: boolean) => void;
 };
 const CheckItem = ({ title, id, done, label, onChange }: CheckProps) => {
   const { changeTaskStatus } = useTasks();
-  const [isDone, setIsDone] = useState(done);
 
   const toggleDone = () => {
     id && changeTaskStatus(id, !done);
-    setIsDone(!done);
     onChange?.(!done);
   };
   return (

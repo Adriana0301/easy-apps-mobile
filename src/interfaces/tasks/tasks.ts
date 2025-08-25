@@ -6,7 +6,7 @@ export type TasksPayload = {
 };
 
 export type TaskState = {
-  id: number;
+  _id: string;
   title: string;
   description?: string;
   done: boolean;
@@ -25,7 +25,7 @@ export type TasksState = {
 };
 
 export type StatusPayload = {
-  id: number;
+  _id: string;
   done: boolean;
 };
 
